@@ -1,48 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
+
+<LinearLayout
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
 
     <EditText
-        android:id="@+id/edit_input_ip"
+        android:id="@+id/edit_input_merchant"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="请输入ip地址（ip:端口）格式"
-        android:text="192.168.100.93:35779" />
+        android:hint="请输入商户号"
+        android:text="302300000582" />
+
+    <EditText
+        android:id="@+id/edit_input_store"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="请输入门店号"
+        android:text="4023000003" />
+
+    <EditText
+        android:id="@+id/edit_input_terminal_sn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="请输入SN"
+        android:text="PP35272203002342" />
+
+    <EditText
+        android:id="@+id/edit_input_currency"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="请输入币种"
+        android:text="ZAR" />
 
     <TextView
-        android:id="@+id/tv_btn_5"
+        android:id="@+id/tv_btn_copy"
         android:layout_width="395dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="10dp"
         android:background="#FFFFFF"
-        android:gravity="center_horizontal"
+        android:gravity="center_horizontal|center_vertical"
         android:padding="10dp"
-        android:text="开始连接" />
-
-    <TextView
-        android:id="@+id/tv_btn_8"
-        android:layout_width="395dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="10dp"
-        android:background="#FFFFFF"
-        android:gravity="center_horizontal"
-        android:padding="10dp"
-        android:text="断开连接" />
-
-    <TextView
-        android:id="@+id/tv_btn_1"
-        android:layout_width="395dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="10dp"
-        android:background="#FFFFFF"
-        android:gravity="center_horizontal"
-        android:padding="10dp"
-        android:text="初始化连接" />
+        android:text="保存参数" />
 
     <TextView
         android:id="@+id/tv_btn_2"
@@ -56,7 +59,7 @@
         android:text="消费" />
 
     <TextView
-        android:id="@+id/tv_btn_6"
+        android:id="@+id/tv_btn_refund"
         android:layout_width="395dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
@@ -67,7 +70,29 @@
         android:text="退款" />
 
     <TextView
-        android:id="@+id/tv_btn_7"
+        android:id="@+id/tv_btn_void"
+        android:layout_width="395dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="10dp"
+        android:background="#FFFFFF"
+        android:gravity="center_horizontal"
+        android:padding="10dp"
+        android:text="撤销" />
+
+    <TextView
+        android:id="@+id/tv_btn_per"
+        android:layout_width="395dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="10dp"
+        android:background="#FFFFFF"
+        android:gravity="center_horizontal"
+        android:padding="10dp"
+        android:text="预授权" />
+
+    <TextView
+        android:id="@+id/tv_btn_query"
         android:layout_width="395dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
@@ -89,7 +114,7 @@
         android:text="关闭交易" />
 
     <TextView
-        android:id="@+id/tv_btn_cloud"
+        android:id="@+id/tv_btn_black"
         android:layout_width="395dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
@@ -97,19 +122,21 @@
         android:background="#FFFFFF"
         android:gravity="center"
         android:padding="10dp"
-        android:text="Cloud" />
+        android:text="返回" />
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
 
-        <TextView
-            android:id="@+id/tv_btn_3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="10dp"
-            android:padding="10dp"
-            android:text="" />
+    <TextView
+        android:id="@+id/tv_btn_3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="10dp"
+        android:padding="10dp"
+        android:text="" />
     </androidx.core.widget.NestedScrollView>
+
 </LinearLayout>
+</ScrollView>

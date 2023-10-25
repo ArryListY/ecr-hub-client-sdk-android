@@ -5,6 +5,11 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
+import com.wisecashier.ecr.demo.trans.cloud.CloudActivity
+import com.wisecashier.ecr.demo.trans.wlan.CloseActivity
+import com.wisecashier.ecr.demo.trans.wlan.PaymentActivity
+import com.wisecashier.ecr.demo.trans.wlan.QueryActivity
+import com.wisecashier.ecr.demo.trans.wlan.RefundActivity
 import com.wisecashier.ecr.sdk.client.ECRHubClient
 import com.wisecashier.ecr.sdk.client.ECRHubConfig
 import com.wisecashier.ecr.sdk.listener.ECRHubConnectListener
@@ -103,6 +108,11 @@ class MainActivity : Activity(), ECRHubConnectListener {
                 }
             })
         }
+
+        tv_btn_cloud.setOnClickListener {
+            startActivity(Intent(applicationContext, CloudActivity::class.java))
+        }
+
     }
 
     override fun onConnect() {
