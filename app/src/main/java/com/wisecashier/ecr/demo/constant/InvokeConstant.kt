@@ -29,6 +29,7 @@ object InvokeConstant {
 
     const val APP_ID = "wz6012822ca2f1as78"
     const val SANDBOX_GATEWAY_URL = "https://gw.wisepaycloud.com/api/entry"
+    const val GATEWAY_URL = "https://gw.paycloud.world/api/entry"
     const val ORDER = "wisehub.cloud.pay.order"
     const val QUERY = "order.query"
 

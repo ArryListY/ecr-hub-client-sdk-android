@@ -50,7 +50,7 @@ class CloudVoidActivity : Activity() {
 
             val appRsaPrivateKeyPem = InvokeConstant.appRsaPrivateKeyPem
             val gatewayRsaPublicKeyPem = InvokeConstant.gatewayRsaPublicKeyPem
-            val url = InvokeConstant.SANDBOX_GATEWAY_URL
+            val url = sharedPreferences.getString("url","").toString()
             val appId = InvokeConstant.APP_ID
             val amount = edit_input_amount.text.toString()
             val expire = edit_input_expires.text.toString()

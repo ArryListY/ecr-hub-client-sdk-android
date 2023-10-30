@@ -13,28 +13,28 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="请输入商户号"
-        android:text="302300000582" />
+        android:text="" />
 
     <EditText
         android:id="@+id/edit_input_store"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="请输入门店号"
-        android:text="4023000003" />
+        android:text="" />
 
     <EditText
         android:id="@+id/edit_input_terminal_sn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="请输入SN"
-        android:text="PP35272203002342" />
+        android:text="" />
 
     <EditText
         android:id="@+id/edit_input_currency"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="请输入币种"
-        android:text="ZAR" />
+        android:text="" />
 
     <TextView
         android:id="@+id/tv_btn_copy"

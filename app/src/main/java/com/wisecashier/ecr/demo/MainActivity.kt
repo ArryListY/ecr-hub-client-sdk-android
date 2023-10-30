@@ -1,10 +1,13 @@
 package com.wisecashier.ecr.demo
 
 import android.app.Activity
+import android.app.AlertDialog
+import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
+import com.wisecashier.ecr.demo.constant.InvokeConstant
 import com.wisecashier.ecr.demo.trans.cloud.CloudActivity
 import com.wisecashier.ecr.demo.trans.wlan.CloseActivity
 import com.wisecashier.ecr.demo.trans.wlan.PaymentActivity
@@ -27,6 +30,9 @@ class MainActivity : Activity(), ECRHubConnectListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         val config = ECRHubConfig()
+
+
+
         tv_btn_5.setOnClickListener {
             if (isConnected) {
                 return@setOnClickListener
@@ -109,11 +115,78 @@ class MainActivity : Activity(), ECRHubConnectListener {
             })
         }
 
+        // 在按钮点击事件中显示询问对话框
         tv_btn_cloud.setOnClickListener {
-            startActivity(Intent(applicationContext, CloudActivity::class.java))
+            showConfirmationDialog()
         }
 
+
+//        tv_btn_cloud.setOnClickListener {
+//            startActivity(Intent(applicationContext, CloudActivity::class.java))
+//        }
+
     }
+    // 显示询问对话框
+    private fun showConfirmationDialog() {
+        val options = arrayOf("生产", "测试")
+
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle("请选择运行环境")
+        builder.setItems(options) { dialog, which ->
+            // 用户选择了一个选项
+            val selectedOption = options[which]
+            // 这里可以根据用户选择执行不同的操作
+            processSelectedOption(selectedOption)
+            dialog.dismiss()
+        }
+
+        builder.setNegativeButton("取消", DialogInterface.OnClickListener { dialog, which ->
+            // 用户取消了操作
+            dialog.dismiss()
+        })
+
+        val dialog = builder.create()
+        dialog.show()
+    }
+
+    private fun processSelectedOption(option: String) {
+        var url = ""
+        var defaultMerchant = ""
+        var defaultStore = ""
+        var defaultTerminalSN = ""
+        var defaultCurrency = ""
+
+        when (option) {
+            "生产" -> {
+                // 执行选项1的操作
+                // 可以将参数传递给其他函数或进行其他逻辑
+                url = InvokeConstant.GATEWAY_URL
+                defaultMerchant = "312100009847"
+                defaultStore = "4123002919"
+                defaultTerminalSN = "PP35272203002329"
+                defaultCurrency = "ZAR"
+            }
+            "测试" -> {
+                // 执行选项2的操作
+                url = InvokeConstant.SANDBOX_GATEWAY_URL
+                defaultMerchant = "302300000582"
+                defaultStore = "4023000003"
+                defaultTerminalSN = "PP35272203002342"
+                defaultCurrency = "ZAR"
+            }
+            else -> {
+                // 处理未知选项
+            }
+        }
+        val intent = Intent(applicationContext, CloudActivity::class.java)
+        intent.putExtra("URL", url)
+        intent.putExtra("DEFAULT_MERCHANT", defaultMerchant)
+        intent.putExtra("DEFAULT_STORE", defaultStore)
+        intent.putExtra("DEFAULT_TERMINAL_SN", defaultTerminalSN)
+        intent.putExtra("DEFAULT_CURRENCY", defaultCurrency)
+        startActivity(intent)
+    }
+
 
     override fun onConnect() {
         Log.e("Test", "onConnect")

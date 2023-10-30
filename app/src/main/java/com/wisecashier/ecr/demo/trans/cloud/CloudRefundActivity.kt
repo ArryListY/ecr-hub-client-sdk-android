@@ -52,7 +52,6 @@ class CloudRefundActivity : Activity() {
 
             val appRsaPrivateKeyPem = InvokeConstant.appRsaPrivateKeyPem
             val gatewayRsaPublicKeyPem = InvokeConstant.gatewayRsaPublicKeyPem
-            val url = InvokeConstant.SANDBOX_GATEWAY_URL
             val appId = InvokeConstant.APP_ID
             val amount = edit_input_amount.text.toString()
             val cash = edit_input_cash.text.toString()
@@ -69,7 +68,7 @@ class CloudRefundActivity : Activity() {
             val store_no = sharedPreferences.getString("store_no", "").toString()
             val terminal_sn = sharedPreferences.getString("terminal_sn", "").toString()
             val price_currency = sharedPreferences.getString("price_currency", "").toString()
-
+            val url = sharedPreferences.getString("url","").toString()
 
             val parameters = mutableMapOf(
                 // Common parameters

@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.widget.EditText
 import android.widget.Toast
 import com.wisecashier.ecr.demo.R
 import kotlinx.android.synthetic.main.activity_cloud.*
@@ -19,6 +20,26 @@ class CloudActivity : Activity(){
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_cloud)
 
+
+        val url = intent.getStringExtra("URL")
+        val defaultMerchant = intent.getStringExtra("DEFAULT_MERCHANT")
+        val defaultStore = intent.getStringExtra("DEFAULT_STORE")
+        val defaultTerminalSN = intent.getStringExtra("DEFAULT_TERMINAL_SN")
+        val defaultCurrency = intent.getStringExtra("DEFAULT_CURRENCY")
+        val merchantEditText = findViewById<EditText>(R.id.edit_input_merchant)
+        val storeEditText = findViewById<EditText>(R.id.edit_input_store)
+        val terminalSNEditText = findViewById<EditText>(R.id.edit_input_terminal_sn)
+        val currencyEditText = findViewById<EditText>(R.id.edit_input_currency)
+        // 使用传递的参数来设置默认值
+        merchantEditText.setText(defaultMerchant)
+        storeEditText.setText(defaultStore)
+        terminalSNEditText.setText(defaultTerminalSN)
+        currencyEditText.setText(defaultCurrency)
+        Log.e("parameter" , "url -->> [$url]  " +
+                "merchant -->> [$defaultMerchant]  " +
+                "store -->> [$defaultStore]  " +
+                "sn --> [$defaultTerminalSN]  " +
+                "defaultCurrency --> [$defaultCurrency]  " )
         // 初始化SharedPreferences，使用应用的包名作为名称
         val sharedPreferences = getSharedPreferences(packageName, MODE_PRIVATE)
 
@@ -37,6 +58,7 @@ class CloudActivity : Activity(){
                 editor.putString("terminal_sn", terminalSn)
                 editor.putString("store_no", storeNo)
                 editor.putString("merchant_no", merchantNo)
+                editor.putString("url", url)
 
                 editor.apply()
                 onConnect()

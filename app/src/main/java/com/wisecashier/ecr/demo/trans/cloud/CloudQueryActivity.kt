@@ -46,7 +46,7 @@ class CloudQueryActivity : Activity() {
 
             val appRsaPrivateKeyPem = InvokeConstant.appRsaPrivateKeyPem
             val gatewayRsaPublicKeyPem = InvokeConstant.gatewayRsaPublicKeyPem
-            val url = InvokeConstant.SANDBOX_GATEWAY_URL
+            val url = sharedPreferences.getString("url","").toString()
             val appId = InvokeConstant.APP_ID
 
             val merchant_no = sharedPreferences.getString("merchant_no", "").toString()
