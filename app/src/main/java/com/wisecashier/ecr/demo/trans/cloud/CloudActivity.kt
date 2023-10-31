@@ -115,6 +115,39 @@ class CloudActivity : Activity(){
             startActivity(Intent(applicationContext, CloudPerAuthActivity::class.java))
         }
 
+        //PerAuth-complete
+        tv_btn_complete.setOnClickListener{
+            if (!isConnected) {
+                runOnUiThread {
+                    Toast.makeText(this, "未保存参数", Toast.LENGTH_LONG).show()
+                }
+                return@setOnClickListener
+            }
+            startActivity(Intent(applicationContext, CloudPerAuthCompleteActivity::class.java))
+        }
+
+        //PerAuth-cancel
+        tv_btn_per_cancel.setOnClickListener{
+            if (!isConnected) {
+                runOnUiThread {
+                    Toast.makeText(this, "未保存参数", Toast.LENGTH_LONG).show()
+                }
+                return@setOnClickListener
+            }
+            startActivity(Intent(applicationContext, CloudPerAuthCancelActivity::class.java))
+        }
+
+        //PerAuth-complete-refund
+        tv_btn_per_complete_refund.setOnClickListener{
+            if (!isConnected) {
+                runOnUiThread {
+                    Toast.makeText(this, "未保存参数", Toast.LENGTH_LONG).show()
+                }
+                return@setOnClickListener
+            }
+            startActivity(Intent(applicationContext, CloudPerAuthCompleteRefundActivity::class.java))
+        }
+
         //Query
         tv_btn_query.setOnClickListener{
             if (!isConnected) {
@@ -125,6 +158,18 @@ class CloudActivity : Activity(){
             }
             startActivity(Intent(applicationContext, CloudQueryActivity::class.java))
         }
+
+        //Close
+        tv_btn_close.setOnClickListener{
+            if (!isConnected) {
+                runOnUiThread {
+                    Toast.makeText(this, "未保存参数", Toast.LENGTH_LONG).show()
+                }
+                return@setOnClickListener
+            }
+            startActivity(Intent(applicationContext, CloudCloseActivity::class.java))
+        }
+
 
         //返回
         tv_btn_black.setOnClickListener{

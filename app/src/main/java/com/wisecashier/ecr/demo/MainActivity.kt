@@ -128,7 +128,7 @@ class MainActivity : Activity(), ECRHubConnectListener {
     }
     // 显示询问对话框
     private fun showConfirmationDialog() {
-        val options = arrayOf("生产", "测试")
+        val options = arrayOf("AddPay-生产-PayCloud Test Merchant", "AddPay-测试-Frame Grilled Chicken", "AddPay-测试-L3 Test Merchant")
 
         val builder = AlertDialog.Builder(this)
         builder.setTitle("请选择运行环境")
@@ -157,25 +157,35 @@ class MainActivity : Activity(), ECRHubConnectListener {
         var defaultCurrency = ""
 
         when (option) {
-            "生产" -> {
-                // 执行选项1的操作
-                // 可以将参数传递给其他函数或进行其他逻辑
+            "AddPay-生产-PayCloud Test Merchant" -> {
+                // 将参数传递给其他函数或进行其他逻辑
                 url = InvokeConstant.GATEWAY_URL
                 defaultMerchant = "312100009847"
                 defaultStore = "4123002919"
                 defaultTerminalSN = "PP35272203002329"
                 defaultCurrency = "ZAR"
             }
-            "测试" -> {
-                // 执行选项2的操作
+            "AddPay-测试-Frame Grilled Chicken" -> {
                 url = InvokeConstant.SANDBOX_GATEWAY_URL
                 defaultMerchant = "302300000582"
                 defaultStore = "4023000003"
                 defaultTerminalSN = "PP35272203002342"
                 defaultCurrency = "ZAR"
             }
+            "AddPay-测试-L3 Test Merchant" -> {
+                url = InvokeConstant.SANDBOX_GATEWAY_URL
+                defaultMerchant = "302300027272"
+                defaultStore = "4023000076"
+                defaultTerminalSN = "PP35272204002841"
+                defaultCurrency = "ZAR"
+            }
             else -> {
                 // 处理未知选项
+                url = InvokeConstant.SANDBOX_GATEWAY_URL
+                defaultMerchant = ""
+                defaultStore = ""
+                defaultTerminalSN = ""
+                defaultCurrency = ""
             }
         }
         val intent = Intent(applicationContext, CloudActivity::class.java)

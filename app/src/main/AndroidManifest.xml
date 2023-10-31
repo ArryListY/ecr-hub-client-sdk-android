@@ -33,5 +33,9 @@
         <activity android:name=".trans.cloud.CloudRefundActivity" />
         <activity android:name=".trans.cloud.CloudVoidActivity" />
         <activity android:name=".trans.cloud.CloudPerAuthActivity" />
+        <activity android:name=".trans.cloud.CloudPerAuthCompleteActivity" />
+        <activity android:name=".trans.cloud.CloudPerAuthCancelActivity" />
+        <activity android:name=".trans.cloud.CloudPerAuthCompleteRefundActivity" />
+        <activity android:name=".trans.cloud.CloudCloseActivity" />
     </application>
 </manifest>

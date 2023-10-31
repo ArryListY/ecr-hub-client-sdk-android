@@ -14,18 +14,13 @@ import com.wisecashier.ecr.demo.constant.InvokeConstant
 import com.wisecashier.ecr.demo.util.DateUtil
 import generateSign
 import getMillisecond
-import kotlinx.android.synthetic.main.activity_cloud_void.*
-import kotlinx.android.synthetic.main.activity_cloud_void.edit_input_expires
-import kotlinx.android.synthetic.main.activity_cloud_void.tv_btn_1
-import kotlinx.android.synthetic.main.activity_cloud_void.tv_btn_2
-import kotlinx.android.synthetic.main.activity_cloud_void.tv_btn_3
-import kotlinx.android.synthetic.main.activity_cloud_void.edit_input_amount
+import kotlinx.android.synthetic.main.activity_cloud_perauthcompleterefund.*
 import mapToJsonString
 import java.io.DataOutputStream
 import java.net.HttpURLConnection
 import java.net.URL
 
-class CloudVoidActivity : Activity() {
+class CloudPerAuthCompleteRefundActivity : Activity() {
 
     // 创建后台线程和主线程的 Handler
     private lateinit var backgroundThread: HandlerThread
@@ -35,7 +30,7 @@ class CloudVoidActivity : Activity() {
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_cloud_void)
+        setContentView(R.layout.activity_cloud_perauthcompleterefund)
         val sharedPreferences = getSharedPreferences(packageName, MODE_PRIVATE)
 
 
@@ -60,11 +55,7 @@ class CloudVoidActivity : Activity() {
                 return@setOnClickListener
             }
             val amt = String.format("%.2f", amount.toDouble())
-            val org_merchant_order_no = edit_input_merchant_order_no.text.toString()
-            if (org_merchant_order_no.isEmpty()) {
-                Toast.makeText(this, "请输入订单号", Toast.LENGTH_LONG).show()
-                return@setOnClickListener
-            }
+
 //            val description = edit_input_description.text.toString()
             val defaultDescription = "默认描述"
             val merchant_no = sharedPreferences.getString("merchant_no", "").toString()
@@ -93,10 +84,23 @@ class CloudVoidActivity : Activity() {
                 "order_amount" to amt,
                 "price_currency" to price_currency,
                 "description" to defaultDescription,
-                "trans_type" to InvokeConstant.VOID.toString(),
-                "orig_merchant_order_no" to org_merchant_order_no,
+                "trans_type" to InvokeConstant.PRE_AUTH_COMPLETE_REFUND.toString(),
                 "merchant_order_no" to DateUtil.getCurDateStr("yyyyMMddHHmmss")
             )
+
+            if (edit_input_merchant_order_no.text.isNotEmpty()){
+                val org_merchant_order_no = edit_input_merchant_order_no.text.toString()
+                parameters["orig_merchant_order_no"] = org_merchant_order_no
+                Log.e("isNotEmpty", org_merchant_order_no)
+            } else {
+                val org_merchant_order_no = sharedPreferences.getString("merchant_order_no", "").toString()
+                parameters["orig_merchant_order_no"] = org_merchant_order_no
+                Log.e("isEmpty", org_merchant_order_no)
+            }
+
+            val editor = sharedPreferences.edit()
+            editor.putString("merchant_order_no", parameters.getValue("merchant_order_no"))
+            editor.apply()
 
             val stringToBeSigned = buildToBeSignedString(parameters)
             val sign = generateSign(stringToBeSigned, appRsaPrivateKeyPem)
@@ -105,8 +109,9 @@ class CloudVoidActivity : Activity() {
             // Send HTTP request (You will need to handle HTTP requests in your Kotlin environment)
             val jsonString = mapToJsonString(parameters)
             runOnUiThread {
+                Log.e("Test", "Request to gateway -->> [$url] send data  -->> $jsonString")
                 tv_btn_3.text =
-                    "Request to gateway [$url] send data  -->> $jsonString"
+                    "Request to gateway -->> [$url] send data  -->> $jsonString"
             }
             backgroundHandler.post {
                 val response = sendHttpRequest(url, jsonString)
@@ -114,9 +119,9 @@ class CloudVoidActivity : Activity() {
                     // 在主线程中处理网络请求的结果
                     // 这里可以更新 UI 或执行其他操作
                     runOnUiThread {
-                        Log.e("Test","Response from gateway [$url] receive data <<-- $response")
+                        Log.e("Test","Response from gateway -->> [$url] receive data <<-- $response")
                         tv_btn_3.text =
-                            tv_btn_3.text.toString() + "\n" + "Response from gateway [$url] receive data <<-- $response"
+                            tv_btn_3.text.toString() + "\n" + "Response from gateway -->> [$url] receive data <<-- $response"
                     }
                 }
             }

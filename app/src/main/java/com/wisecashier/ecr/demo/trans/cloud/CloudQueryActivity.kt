@@ -90,6 +90,7 @@ class CloudQueryActivity : Activity() {
                     // 在主线程中处理网络请求的结果
                     // 这里可以更新 UI 或执行其他操作
                     runOnUiThread {
+                        Log.e("Test","Response from gateway [$url] receive data <<-- $response")
                         tv_btn_3.text =
                             tv_btn_3.text.toString() + "\n" + "Response from gateway[$url] receive data <<-- $response"
                     }
