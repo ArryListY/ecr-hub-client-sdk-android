@@ -33,6 +33,7 @@ class MainActivity : Activity(), ECRHubConnectListener {
 
 
 
+        //开始连接
         tv_btn_5.setOnClickListener {
             if (isConnected) {
                 return@setOnClickListener
@@ -44,10 +45,16 @@ class MainActivity : Activity(), ECRHubConnectListener {
             }
             mClient = ECRHubClient("ws://" + text, config, this)
             mClient.connect()
+            runOnUiThread {
+                Toast.makeText(this, "正在连接 $text" , Toast.LENGTH_LONG).show()
+                tv_btn_3.text = "正在连接 $text ......"
+            }
         }
+        //断开连接
         tv_btn_8.setOnClickListener {
             mClient.disConnect()
         }
+        //消费
         tv_btn_2.setOnClickListener {
             if (!isConnected) {
                 runOnUiThread {
@@ -57,6 +64,7 @@ class MainActivity : Activity(), ECRHubConnectListener {
             }
             startActivity(Intent(applicationContext, PaymentActivity::class.java))
         }
+        //查询
         tv_btn_7.setOnClickListener {
             if (!isConnected) {
                 runOnUiThread {
@@ -66,6 +74,7 @@ class MainActivity : Activity(), ECRHubConnectListener {
             }
             startActivity(Intent(applicationContext, QueryActivity::class.java))
         }
+        //退款
         tv_btn_6.setOnClickListener {
             if (!isConnected) {
                 runOnUiThread {
@@ -75,6 +84,7 @@ class MainActivity : Activity(), ECRHubConnectListener {
             }
             startActivity(Intent(applicationContext, RefundActivity::class.java))
         }
+        //关单
         tv_btn_4.setOnClickListener {
             if (!isConnected) {
                 runOnUiThread {
@@ -85,6 +95,7 @@ class MainActivity : Activity(), ECRHubConnectListener {
             startActivity(Intent(applicationContext, CloseActivity::class.java))
         }
 
+        //初始化连接
         tv_btn_1.setOnClickListener {
             if (!isConnected) {
                 runOnUiThread {
@@ -115,15 +126,10 @@ class MainActivity : Activity(), ECRHubConnectListener {
             })
         }
 
-        // 在按钮点击事件中显示询问对话框
+        // 云端模式
         tv_btn_cloud.setOnClickListener {
             showConfirmationDialog()
         }
-
-
-//        tv_btn_cloud.setOnClickListener {
-//            startActivity(Intent(applicationContext, CloudActivity::class.java))
-//        }
 
     }
     // 显示询问对话框
@@ -212,6 +218,9 @@ class MainActivity : Activity(), ECRHubConnectListener {
     }
 
     override fun onError(errorCode: String?, errorMsg: String?) {
+        runOnUiThread {
+            Toast.makeText(this, "连接连接失败", Toast.LENGTH_LONG).show()
+        }
         Log.e("Test", "onError")
         isConnected = false
     }
