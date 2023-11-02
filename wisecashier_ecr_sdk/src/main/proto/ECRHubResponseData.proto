@@ -4,58 +4,76 @@ option java_package = "com.wiseasy.ecr.hub.data";
 option java_outer_classname = "ECRHubResponseProto";
 message ECRHubResponse {
   /**
-  topic ：ecrhub.init：init（Handshake）；ecrhub.pay.order：payment；ecrhub.pay.query：query；ecrhub.pay.close：close order；ecrhub.heartbeat：heart beat
+  topic:ecrhub.pay.init:init;ecrhub.pay.order:payment;ecrhub.pay.query:query;ecrhub.pay.close:close order;
    */
   string topic = 1;
   /**
-  Message ID, used to track the sending and returning of orders
+  Request ID, used to track the sending and returning of orders
   */
-  string msg_id = 2;
+  string request_id = 2;
   /**
   AppID of payment application
   */
-  string  app_id = 3;
-  /**
-  time stamp
-  */
-  string timestamp = 4;
+  string app_id = 3;
   /**
   status
  */
-  bool success = 5;
+  bool success = 4;
   /**
   error message
   */
-  string errorMsg = 6;
-  /**
-  sdk version
-  */
-  string version = 7;
+  string error_msg = 5;
   /**
   Response Business Data
   */
-  ResponseBizData biz_data = 8;
+  ResponseBizData biz_data = 6;
   /**
-  Response device data
+   Response device data
   */
-  ResponseDeviceData device_data = 9;
+  ResponseDeviceData device_data = 7;
+}
+
+message PayMethodCategory {
+  /**
+  payment method category
+   */
+  string pay_method_category = 1;
+  /**
+  list pay method
+   */
+  repeated PayMethod pay_method_list = 2;
+}
+
+message PayMethod{
+  /**
+  pay method id
+   */
+  string pay_method_id = 1;
+  /**
+  pay method name
+   */
+  string pay_method_name = 2;
+  /**
+  support trans type
+   */
+  repeated string supported_trans_type_list = 3;
 }
 
 message ResponseDeviceData {
   /**
+  mac address
+   */
+  string mac_address = 1;
+  /**
+  server name
+   */
+  string app_name = 2;
+  /**
   device sn
-  */
-  string device_sn = 1;
+   */
+  string device_sn = 3;
   /**
-  device model
-  */
-  string device_model = 2;
-  /**
-  cashier app name
-  */
-  string app_name = 3;
-  /**
-  cashier app version
+  app version name
   */
   string app_version = 4;
 }
@@ -82,48 +100,52 @@ message ResponseBizData {
   */
   string trans_type = 5;
   /**
-  store no
-  */
-  string store_no = 6;
-  /**
-  terminal sn
-  */
-  string terminal_sn = 7;
-  /**
   pay scenario
   */
-  string pay_scenario = 8;
+  string pay_scenario = 6;
   /**
   trans status
   */
-  string trans_status = 9;
+  string trans_status = 7;
   /**
   pay channel trans_no
   */
-  string pay_channel_trans_no = 10;
-  /**
-  pay account id
-  */
-  string pay_user_account_id = 11;
-  /**
-  paid amount
-  */
-  string paid_amount = 12;
+  string pay_channel_trans_no = 8;
   /**
   trans end time
   */
-  string trans_end_time = 13;
+  string trans_end_time = 9;
   /**
   pay method id
   */
-  string pay_method_id = 14;
+  string pay_method_id = 10;
   /**
-  token
+  merchant discount
   */
-  string token = 15;
+  string discount_bmopc = 11;
+  /**
+   pay channel discount
+  */
+  string discount_bpc = 12;
   /**
  extends params
  */
-  map<string, string> extends_params = 16;
+  map<string, string> extends_params = 13;
+  /**
+  Additional information
+   */
+  string attach = 14;
+  /**
+ Cashback amount
+ */
+  string cashback_amount = 15;
+  /**
+  tip amount
+  */
+  string tip_amount = 16;
+  /**
+  list payment method category
+   */
+  repeated PayMethodCategory pay_method_category_list = 17;
 }
 

@@ -94,7 +94,7 @@ buildscript {
 
 protobuf {
     protoc {
-        artifact = 'com.google.protobuf:protoc:3.21.7' // 也可以配置本地编译器路径
+        artifact = 'com.google.protobuf:protoc:3.21.1' // 也可以配置本地编译器路径
     }
     generateProtoTasks {
         all().each { task ->
@@ -118,5 +118,5 @@ dependencies {
     implementation 'org.java-websocket:Java-WebSocket:1.4.0'
     api 'com.squareup.retrofit2:retrofit:2.7.1'
     api 'org.ligboy.retrofit2:converter-fastjson-android:2.1.0'
-    implementation 'com.google.protobuf:protobuf-java:3.21.7'
+    implementation 'com.google.protobuf:protobuf-java:3.21.1'
 }

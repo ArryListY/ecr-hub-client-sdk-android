@@ -3,6 +3,7 @@ package com.wisecashier.ecr.sdk.client;
 import static com.wisecashier.ecr.sdk.util.Constants.HEART_BEAT_TOPIC;
 import static com.wisecashier.ecr.sdk.util.Constants.INIT_TOPIC;
 
+import android.net.nsd.NsdManager;
 import android.os.Handler;
 import android.util.Log;
 
@@ -15,11 +16,13 @@ import com.wiseasy.ecr.hub.data.ECRHubResponseProto;
 import com.wisecashier.ecr.sdk.client.payment.Payment;
 import com.wisecashier.ecr.sdk.listener.ECRHubConnectListener;
 import com.wisecashier.ecr.sdk.listener.ECRHubResponseCallBack;
+import com.wisecashier.ecr.sdk.util.Base64Utils;
 
 import org.java_websocket.client.WebSocketClient;
 import org.java_websocket.handshake.ServerHandshake;
 
 import java.net.URI;
+import java.nio.ByteBuffer;
 import java.util.Objects;
 
 /**
@@ -51,8 +54,9 @@ public class ECRHubClient {
     public void init(ECRHubResponseCallBack callBack) {
         initCallback = callBack;
         if (isConnected()) {
-            ECRHubRequestProto.ECRHubRequest data = ECRHubRequestProto.ECRHubRequest.newBuilder().setTopic(INIT_TOPIC).build();
-            webSocketClient.send(data.toByteString().toStringUtf8());
+            ECRHubRequestProto.RequestBizData bizData = ECRHubRequestProto.RequestBizData.newBuilder().setConfirmOnTerminal(true).setIsAutoSettlement(true).build();
+            ECRHubRequestProto.ECRHubRequest data = ECRHubRequestProto.ECRHubRequest.newBuilder().setTopic(INIT_TOPIC).setBizData(bizData).build();
+            webSocketClient.send(data.toByteArray());
         }
     }
 
@@ -72,11 +76,28 @@ public class ECRHubClient {
         webSocketClient = new WebSocketClient(uri) {
             @Override
             public void onMessage(String message) {
-                ByteString msg = ByteString.copyFromUtf8(message);
                 try {
-                    ECRHubResponseProto.ECRHubResponse response = ECRHubResponseProto.ECRHubResponse.parseFrom(msg);
+                    ECRHubResponseProto.ECRHubResponse response = ECRHubResponseProto.ECRHubResponse.parseFrom(message.getBytes());
                     if (response.getTopic().equals(INIT_TOPIC)) {
-                        ECRHubResponseProto.ResponseDeviceData initData = response.getDeviceData();
+                        ECRHubResponseProto.ResponseBizData initData = response.getBizData();
+                        initCallback.onSuccess(JsonFormat.printToString(initData));
+                    } else if (!response.getTopic().equals(HEART_BEAT_TOPIC)) {
+                        if (null != payment && null != payment.getResponseCallBack()) {
+                            payment.getResponseCallBack().onSuccess(JsonFormat.printToString(response));
+                        }
+                    }
+                } catch (InvalidProtocolBufferException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+
+
+            @Override
+            public void onMessage(ByteBuffer bytes) {
+                try {
+                    ECRHubResponseProto.ECRHubResponse response = ECRHubResponseProto.ECRHubResponse.parseFrom(bytes);
+                    if (response.getTopic().equals(INIT_TOPIC)) {
+                        ECRHubResponseProto.ResponseBizData initData = response.getBizData();
                         initCallback.onSuccess(JsonFormat.printToString(initData));
                     } else if (!response.getTopic().equals(HEART_BEAT_TOPIC)) {
                         if (null != payment && null != payment.getResponseCallBack()) {

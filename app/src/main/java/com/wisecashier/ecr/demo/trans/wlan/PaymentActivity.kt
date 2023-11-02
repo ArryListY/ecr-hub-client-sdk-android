@@ -62,7 +62,6 @@ class PaymentActivity : Activity() {
             params.appId = "wz6012822ca2f1as78"
             merchantOrderNo = "WLAN_" + getCurDateStr("yyyyMMddHHmmss")
             params.merchantOrderNo = merchantOrderNo
-            params.payMethod = "BANKCARD"
             params.transAmount = amount
             params.tipAmount = tip
             params.description = description
