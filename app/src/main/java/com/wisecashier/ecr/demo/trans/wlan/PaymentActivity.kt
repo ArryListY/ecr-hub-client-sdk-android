@@ -64,7 +64,9 @@ class PaymentActivity : Activity() {
             merchantOrderNo = "WLAN_" + getCurDateStr("yyyyMMddHHmmss")
             params.merchantOrderNo = merchantOrderNo
             params.transAmount = amount
-            params.tipAmount = tip
+            if (tip.isNotEmpty()){
+                params.tipAmount = tip
+            }
             params.description = description
             params.msgId = "111111"
             val voiceData = params.voice_data
@@ -84,6 +86,11 @@ class PaymentActivity : Activity() {
                 }
 
                 override fun onSuccess(data: String?) {
+                    val sharedPreferences = getSharedPreferences(packageName, MODE_PRIVATE)
+                    val orderNum = params.merchantOrderNo
+                    val editor = sharedPreferences.edit()
+                    editor.putString("merchant_order_no", orderNum)
+                    editor.apply()
                     runOnUiThread {
                         tv_btn_3.text =
                             tv_btn_3.text.toString() + "\n" + "交易结果数据：" + "\n" + data.toString()

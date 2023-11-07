@@ -187,6 +187,9 @@ public class PaymentParams {
         if (null != merchantOrderNo) {
             json.put("merchant_order_no", this.merchantOrderNo);
         }
+        if (null != origMerchantOrderNo) {
+            json.put("orig_merchant_order_no", this.origMerchantOrderNo);
+        }
         if (null != transAmount) {
             json.put("trans_amount", this.transAmount);
         }

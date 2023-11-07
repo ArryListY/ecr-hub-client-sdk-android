@@ -35,7 +35,7 @@ public class Payment {
         if (null != params.getVoice_data() && null != params.getVoice_data().getContent()) {
             voiceData = ECRHubRequestProto.VoiceData.newBuilder().setContent(params.getVoice_data().getContent()).setContentLocale(params.getVoice_data().getContent_locale()).build();
         }
-        ECRHubRequestProto.RequestBizData bizData = ECRHubRequestProto.RequestBizData.newBuilder().setMerchantOrderNo(params.merchantOrderNo).setTransType("" + params.transType).setOrderAmount(params.transAmount).build();
+        ECRHubRequestProto.RequestBizData bizData = ECRHubRequestProto.RequestBizData.newBuilder().setMerchantOrderNo(params.merchantOrderNo).setTransType("" + params.transType).setOrderAmount(params.transAmount).setTipAmount(params.tipAmount).setConfirmOnTerminal(true).build();
         ECRHubRequestProto.ECRHubRequest data = ECRHubRequestProto.ECRHubRequest.newBuilder().setRequestId(params.msgId).setTopic(params.getTopic()).setVoiceData(voiceData).setBizData(bizData).setAppId(params.appId).build();
         if (null != webSocketClient && webSocketClient.isOpen()) {
             webSocketClient.send(data.toByteArray());
@@ -47,7 +47,7 @@ public class Payment {
         if (null == params.getTopic()) {
             params.setTopic(CLOSE_TOPIC);
         }
-        ECRHubRequestProto.RequestBizData bizData = ECRHubRequestProto.RequestBizData.newBuilder().setMerchantOrderNo(params.getMerchantOrderNo()).build();
+        ECRHubRequestProto.RequestBizData bizData = ECRHubRequestProto.RequestBizData.newBuilder().setMerchantOrderNo(params.getMerchantOrderNo()).setConfirmOnTerminal(true).build();
         ECRHubRequestProto.ECRHubRequest data = ECRHubRequestProto.ECRHubRequest.newBuilder().setRequestId(params.msgId).setTopic(params.getTopic()).setBizData(bizData).setAppId(params.appId).build();
         if (null != webSocketClient && webSocketClient.isOpen()) {
             webSocketClient.send(data.toByteArray());
@@ -62,7 +62,7 @@ public class Payment {
         if (null == params.merchantOrderNo) {
             params.setMerchantOrderNo(params.origMerchantOrderNo);
         }
-        ECRHubRequestProto.RequestBizData bizData = ECRHubRequestProto.RequestBizData.newBuilder().setOrigMerchantOrderNo(params.getOrigMerchantOrderNo()).setMerchantOrderNo(params.merchantOrderNo).build();
+        ECRHubRequestProto.RequestBizData bizData = ECRHubRequestProto.RequestBizData.newBuilder().setOrigMerchantOrderNo(params.getOrigMerchantOrderNo()).setMerchantOrderNo(params.merchantOrderNo).setConfirmOnTerminal(true).build();
         ECRHubRequestProto.ECRHubRequest data = ECRHubRequestProto.ECRHubRequest.newBuilder().setRequestId(params.msgId).setTopic(params.getTopic()).setBizData(bizData).setAppId(params.appId).build();
         if (null != webSocketClient && webSocketClient.isOpen()) {
             webSocketClient.send(data.toByteArray());
@@ -81,7 +81,7 @@ public class Payment {
         if (null != params.getVoice_data() && null != params.getVoice_data().getContent()) {
             voiceData = ECRHubRequestProto.VoiceData.newBuilder().setContent(params.getVoice_data().getContent()).setContentLocale(params.getVoice_data().getContent_locale()).build();
         }
-        ECRHubRequestProto.RequestBizData bizData = ECRHubRequestProto.RequestBizData.newBuilder().setMerchantOrderNo(params.merchantOrderNo).setOrigMerchantOrderNo(params.origMerchantOrderNo).setPayMethodCategory(params.payMethod).setTransType("" + params.transType).setOrderAmount(params.transAmount).build();
+        ECRHubRequestProto.RequestBizData bizData = ECRHubRequestProto.RequestBizData.newBuilder().setMerchantOrderNo(params.merchantOrderNo).setOrigMerchantOrderNo(params.origMerchantOrderNo).setPayMethodCategory(params.payMethod).setTransType("" + params.transType).setOrderAmount(params.transAmount).setConfirmOnTerminal(false).build();
         ECRHubRequestProto.ECRHubRequest data = ECRHubRequestProto.ECRHubRequest.newBuilder().setRequestId(params.msgId).setTopic(params.getTopic()).setVoiceData(voiceData).setBizData(bizData).setAppId(params.appId).build();
         if (null != webSocketClient && webSocketClient.isOpen()) {
             webSocketClient.send(data.toByteArray());

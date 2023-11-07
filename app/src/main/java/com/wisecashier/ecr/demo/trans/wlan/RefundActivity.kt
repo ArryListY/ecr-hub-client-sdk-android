@@ -2,6 +2,7 @@ package com.wisecashier.ecr.demo.trans.wlan
 
 import android.app.Activity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import com.wisecashier.ecr.demo.MainActivity
 import com.wisecashier.ecr.demo.R
@@ -57,26 +58,30 @@ class RefundActivity : Activity() {
                 return@setOnClickListener
             }
             val merchantOrderNo = edit_input_merchant_order_no.text.toString()
-            if (merchantOrderNo.isEmpty()) {
-                Toast.makeText(this, "请输入商户订单号", Toast.LENGTH_LONG).show()
-                return@setOnClickListener
-            }
             val params = PaymentParams()
             params.transType = Constants.TRANS_TYPE_REFUND
             params.appId = "wz6012822ca2f1as78"
-            params.origMerchantOrderNo = merchantOrderNo
-            params.merchantOrderNo = "123" + getCurDateStr("yyyyMMddHHmmss")
-            params.payMethod = "BANKCARD"
+            if (merchantOrderNo.isEmpty()) {
+                val sharedPreferences = getSharedPreferences(packageName, MODE_PRIVATE)
+                val orderNo = sharedPreferences.getString("merchant_order_no","").toString()
+                params.origMerchantOrderNo = orderNo
+                Log.e("Test","origMerchantOrderNo: $orderNo   ==?  ${params.origMerchantOrderNo}")
+            } else {
+                params.origMerchantOrderNo = merchantOrderNo
+            }
+            params.merchantOrderNo = "Refund_" + getCurDateStr("yyyyMMddHHmmss")
+            params.payMethod = "QR_C_SCAN_B"
             params.transAmount = amount
             params.msgId = "111111"
             val voiceData = params.voice_data
-            voiceData.content = "AddpayCashier2 Received a new order"
+            voiceData.content = "WiseCashier2 Received a new order"
             voiceData.content_locale = "en-US"
             params.voice_data = voiceData
             runOnUiThread {
                 tv_btn_3.text =
                     tv_btn_3.text.toString() + "\n" + "交易发送数据" + params.toJSON().toString()
             }
+
             MainActivity.mClient.payment.refund(params, object :
                 ECRHubResponseCallBack {
                 override fun onError(errorCode: String?, errorMsg: String?) {
@@ -86,6 +91,11 @@ class RefundActivity : Activity() {
                 }
 
                 override fun onSuccess(data: String?) {
+                    val sharedPreferences = getSharedPreferences(packageName, MODE_PRIVATE)
+                    val orderNum = params.merchantOrderNo
+                    val editor = sharedPreferences.edit()
+                    editor.putString("merchant_order_no", orderNum)
+                    editor.apply()
                     runOnUiThread {
                         tv_btn_3.text =
                             tv_btn_3.text.toString() + "\n" + "交易结果数据" + "\n" + data.toString()
