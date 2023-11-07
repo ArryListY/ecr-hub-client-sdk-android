@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.widget.Toast
 import com.wisecashier.ecr.demo.MainActivity
 import com.wisecashier.ecr.demo.R
+import com.wisecashier.ecr.demo.constant.InvokeConstant
 import com.wisecashier.ecr.sdk.client.payment.PaymentParams
 import com.wisecashier.ecr.sdk.listener.ECRHubResponseCallBack
 import com.wisecashier.ecr.sdk.util.Constants
@@ -59,7 +60,7 @@ class PaymentActivity : Activity() {
             }
             val params = PaymentParams()
             params.transType = Constants.TRANS_TYPE_PURCHASE
-            params.appId = "wz6012822ca2f1as78"
+            params.appId = InvokeConstant.APP_ID
             merchantOrderNo = "WLAN_" + getCurDateStr("yyyyMMddHHmmss")
             params.merchantOrderNo = merchantOrderNo
             params.transAmount = amount
