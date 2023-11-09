@@ -6,13 +6,25 @@
 
     <TextView
         android:id="@+id/tv_btn_5"
-        android:layout_width="wrap_content"
+        android:layout_width="386dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="10dp"
         android:background="#FFFFFF"
+        android:gravity="clip_horizontal|center"
         android:padding="10dp"
         android:text="查找设备" />
+
+    <TextView
+        android:id="@+id/tv_btn_cloud"
+        android:layout_width="386dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="10dp"
+        android:background="#FFFFFF"
+        android:gravity="clip_horizontal|center"
+        android:padding="10dp"
+        android:text="ECR Cloud" />
 
     <TextView
         android:id="@+id/tv_btn_8"

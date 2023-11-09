@@ -1,12 +1,20 @@
 package com.wisecashier.ecr.demo
 
 import android.app.Activity
+import android.app.AlertDialog
+import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.view.WindowManager
 import android.widget.Toast
+import com.wisecashier.ecr.demo.constant.InvokeConstant
+import com.wisecashier.ecr.demo.trans.cloud.CloudActivity
+import com.wisecashier.ecr.demo.trans.wlan.CloseActivity
+import com.wisecashier.ecr.demo.trans.wlan.PaymentActivity
+import com.wisecashier.ecr.demo.trans.wlan.QueryActivity
+import com.wisecashier.ecr.demo.trans.wlan.RefundActivity
 import com.wisecashier.ecr.sdk.client.ECRHubClient
 import com.wisecashier.ecr.sdk.client.ECRHubConfig
 import com.wisecashier.ecr.sdk.jmdns.SearchServerListener
@@ -29,11 +37,19 @@ class MainActivity : Activity(), ECRHubConnectListener, SearchServerListener {
         mClient = ECRHubClient(this, config, this)
         tv_btn_5.setOnClickListener {
             if (ip.isEmpty()) {
+                Log.e("test","点击")
+
                 mClient.findServer(this@MainActivity)
+
             } else {
                 mClient.autoConnect(ip)
             }
         }
+
+        tv_btn_cloud.setOnClickListener {
+            showConfirmationDialog()
+        }
+
         tv_btn_8.setOnClickListener {
             mClient.disConnect()
         }
@@ -163,6 +179,77 @@ class MainActivity : Activity(), ECRHubConnectListener, SearchServerListener {
                 }
             })
         }
+    }
+
+    // 显示询问对话框
+    private fun showConfirmationDialog() {
+        val options = arrayOf("AddPay-生产-PayCloud Test Merchant", "AddPay-测试-Frame Grilled Chicken", "AddPay-测试-L3 Test Merchant")
+
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle("请选择运行环境")
+        builder.setItems(options) { dialog, which ->
+            // 用户选择了一个选项
+            val selectedOption = options[which]
+            // 这里可以根据用户选择执行不同的操作
+            processSelectedOption(selectedOption)
+            dialog.dismiss()
+        }
+
+        builder.setNegativeButton("取消", DialogInterface.OnClickListener { dialog, which ->
+            // 用户取消了操作
+            dialog.dismiss()
+        })
+
+        val dialog = builder.create()
+        dialog.show()
+    }
+
+    private fun processSelectedOption(option: String) {
+        var url = ""
+        var defaultMerchant = ""
+        var defaultStore = ""
+        var defaultTerminalSN = ""
+        var defaultCurrency = ""
+
+        when (option) {
+            "AddPay-生产-PayCloud Test Merchant" -> {
+                // 将参数传递给其他函数或进行其他逻辑
+                url = InvokeConstant.GATEWAY_URL
+                defaultMerchant = "312100009847"
+                defaultStore = "4123002919"
+                defaultTerminalSN = "PP35272203002329"
+                defaultCurrency = "ZAR"
+            }
+            "AddPay-测试-Frame Grilled Chicken" -> {
+                url = InvokeConstant.SANDBOX_GATEWAY_URL
+                defaultMerchant = "302300000582"
+                defaultStore = "4023000003"
+                defaultTerminalSN = "PP35272203002342"
+                defaultCurrency = "ZAR"
+            }
+            "AddPay-测试-L3 Test Merchant" -> {
+                url = InvokeConstant.SANDBOX_GATEWAY_URL
+                defaultMerchant = "302300027272"
+                defaultStore = "4023000076"
+                defaultTerminalSN = "PP35272204002841"
+                defaultCurrency = "ZAR"
+            }
+            else -> {
+                // 处理未知选项
+                url = InvokeConstant.SANDBOX_GATEWAY_URL
+                defaultMerchant = ""
+                defaultStore = ""
+                defaultTerminalSN = ""
+                defaultCurrency = ""
+            }
+        }
+        val intent = Intent(applicationContext, CloudActivity::class.java)
+        intent.putExtra("URL", url)
+        intent.putExtra("DEFAULT_MERCHANT", defaultMerchant)
+        intent.putExtra("DEFAULT_STORE", defaultStore)
+        intent.putExtra("DEFAULT_TERMINAL_SN", defaultTerminalSN)
+        intent.putExtra("DEFAULT_CURRENCY", defaultCurrency)
+        startActivity(intent)
     }
 
     override fun onConnect() {
