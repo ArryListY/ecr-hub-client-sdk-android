@@ -7,25 +7,43 @@
         android:id="@+id/edit_input_amount"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:digits="1234567890."
+        android:inputType="number"
         android:hint="请输入金额（元为单位）" />
+
+    <EditText
+        android:id="@+id/edit_input_tip"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:digits="1234567890."
+        android:inputType="number"
+        android:hint="请输入小费（元为单位）" />
+
+    <EditText
+        android:id="@+id/edit_input_description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="请输入备注" />
 
     <TextView
         android:id="@+id/tv_btn_1"
-        android:layout_width="wrap_content"
+        android:layout_width="395dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="10dp"
         android:background="#FFFFFF"
+        android:gravity="center"
         android:padding="10dp"
         android:text="开始交易" />
 
     <TextView
         android:id="@+id/tv_btn_2"
-        android:layout_width="wrap_content"
+        android:layout_width="395dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="10dp"
         android:background="#FFFFFF"
+        android:gravity="center"
         android:padding="10dp"
         android:text="关闭页面" />
 
@@ -42,4 +60,5 @@
             android:padding="10dp"
             android:text="" />
     </androidx.core.widget.NestedScrollView>
+
 </LinearLayout>

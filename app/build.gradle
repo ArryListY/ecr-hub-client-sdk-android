@@ -34,10 +34,20 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+    android.applicationVariants.all{ variant ->
+        variant.outputs.all{
+            def fileName = "ecr-invoke-${buildType.name}.apk"
+            outputFileName = fileName
+        }
+    }
 }
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation project(path: ':wisecashier_ecr_sdk')
+    implementation 'com.github.kittinunf.fuel:fuel:2.3.1'
+    implementation 'com.github.kittinunf.fuel:fuel-android:2.3.1'
+    implementation "com.fasterxml.jackson.module:jackson-module-kotlin:2.12.2"
+    implementation 'com.google.code.gson:gson:2.8.9'
     //implementation 'com.github.paycloud-open:ecr-hub-client-sdk-android:1.0.2'
 }

@@ -8,7 +8,7 @@
         android:id="@+id/edit_input_merchant_order_no"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="请输入商户订单号" />
+        android:hint="请输入商户订单号/直接查询之前的交易订单" />
 
     <TextView
         android:id="@+id/tv_btn_1"
@@ -19,7 +19,7 @@
         android:background="#FFFFFF"
         android:gravity="center"
         android:padding="10dp"
-        android:text="确认" />
+        android:text="查询" />
 
     <TextView
         android:id="@+id/tv_btn_2"

@@ -9,9 +9,9 @@
     <application
         android:name=".AppContext"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/ic_logo"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@drawable/ic_logo"
         android:supportsRtl="true"
         android:usesCleartextTraffic="true">
         <activity
@@ -23,9 +23,19 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".PaymentActivity" />
-        <activity android:name=".CloseActivity" />
-        <activity android:name=".QueryActivity" />
-        <activity android:name=".RefundActivity" />
+        <activity android:name=".trans.wlan.PaymentActivity" />
+        <activity android:name=".trans.wlan.CloseActivity" />
+        <activity android:name=".trans.wlan.QueryActivity" />
+        <activity android:name=".trans.wlan.RefundActivity" />
+        <activity android:name=".trans.cloud.CloudActivity" />
+        <activity android:name=".trans.cloud.CloudQueryActivity" />
+        <activity android:name=".trans.cloud.CloudPurchaseActivity" />
+        <activity android:name=".trans.cloud.CloudRefundActivity" />
+        <activity android:name=".trans.cloud.CloudVoidActivity" />
+        <activity android:name=".trans.cloud.CloudPerAuthActivity" />
+        <activity android:name=".trans.cloud.CloudPerAuthCompleteActivity" />
+        <activity android:name=".trans.cloud.CloudPerAuthCancelActivity" />
+        <activity android:name=".trans.cloud.CloudPerAuthCompleteRefundActivity" />
+        <activity android:name=".trans.cloud.CloudCloseActivity" />
     </application>
 </manifest>

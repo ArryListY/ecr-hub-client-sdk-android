@@ -1,14 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
-
+    android:orientation="vertical"
+    android:layout_height="match_parent">
     <EditText
-        android:id="@+id/edit_input_merchant_order_no"
+        android:id="@+id/edit_input_amount"
+        android:digits="1234567890."
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="请输入商户订单号" />
+        android:inputType="number"
+        android:hint="请输入金额（元为单位）" />
+
+    <EditText
+        android:id="@+id/edit_input_description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="请输入备注" />
+
+    <EditText
+        android:id="@+id/edit_input_expires"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:hint="过期时间默认300s" />
 
     <TextView
         android:id="@+id/tv_btn_1"
@@ -19,7 +33,7 @@
         android:background="#FFFFFF"
         android:gravity="center"
         android:padding="10dp"
-        android:text="确认" />
+        android:text="开始交易" />
 
     <TextView
         android:id="@+id/tv_btn_2"
@@ -45,4 +59,5 @@
             android:padding="10dp"
             android:text="" />
     </androidx.core.widget.NestedScrollView>
+
 </LinearLayout>
