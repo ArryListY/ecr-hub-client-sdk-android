@@ -30,6 +30,28 @@
         android:text="退款" />
 
     <TextView
+        android:id="@+id/tv_btn_4"
+        android:layout_width="395dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="10dp"
+        android:background="#FFFFFF"
+        android:gravity="center"
+        android:padding="10dp"
+        android:text="主扫退款" />
+
+    <TextView
+        android:id="@+id/tv_btn_5"
+        android:layout_width="395dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="10dp"
+        android:background="#FFFFFF"
+        android:gravity="center"
+        android:padding="10dp"
+        android:text="被扫退款" />
+
+    <TextView
         android:id="@+id/tv_btn_2"
         android:layout_width="395dp"
         android:layout_height="wrap_content"

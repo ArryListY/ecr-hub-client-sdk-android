@@ -26,10 +26,10 @@ class CloseActivity : Activity() {
             if (merchantOrderNo.isEmpty()) {
                 val sharedPreferences = getSharedPreferences(packageName, MODE_PRIVATE)
                 val orderNo = sharedPreferences.getString("merchant_order_no","").toString()
-                params.origMerchantOrderNo = orderNo
+                params.merchantOrderNo = orderNo
                 Log.e("Test","origMerchantOrderNo: $orderNo   ==?  ${params.origMerchantOrderNo}")
             } else {
-                params.origMerchantOrderNo = merchantOrderNo
+                params.merchantOrderNo = merchantOrderNo
             }
             params.appId = "wz6012822ca2f1as78"
             params.msgId = "11322"
