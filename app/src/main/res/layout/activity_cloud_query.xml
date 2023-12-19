@@ -19,7 +19,7 @@
         android:background="#FFFFFF"
         android:gravity="center"
         android:padding="10dp"
-        android:text="查询" />
+        android:text="@string/Query" />
 
     <TextView
         android:id="@+id/tv_btn_2"
@@ -30,7 +30,7 @@
         android:background="#FFFFFF"
         android:gravity="center"
         android:padding="10dp"
-        android:text="关闭页面" />
+        android:text="@string/back" />
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="wrap_content"

@@ -27,7 +27,7 @@
         android:background="#FFFFFF"
         android:gravity="center"
         android:padding="10dp"
-        android:text="退款" />
+        android:text="@string/Refund" />
 
     <TextView
         android:id="@+id/tv_btn_4"
@@ -60,7 +60,7 @@
         android:background="#FFFFFF"
         android:gravity="center"
         android:padding="10dp"
-        android:text="关闭页面" />
+        android:text="@string/back" />
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="wrap_content"

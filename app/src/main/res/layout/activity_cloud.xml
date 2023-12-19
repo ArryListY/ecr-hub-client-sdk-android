@@ -12,31 +12,35 @@
         android:id="@+id/edit_input_merchant"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="请输入商户号"
+        android:hint="@string/input_num"
+        android:visibility="gone"
         android:text="" />
 
     <EditText
         android:id="@+id/edit_input_store"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="请输入门店号"
+        android:hint="@string/input_store"
+        android:visibility="gone"
         android:text="" />
 
     <EditText
         android:id="@+id/edit_input_terminal_sn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="请输入SN"
+        android:visibility="gone"
+        android:hint="@string/input_SN"
         android:text="" />
 
     <EditText
         android:id="@+id/edit_input_currency"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="请输入币种"
+        android:hint="@string/input_zar"
+        android:visibility="gone"
         android:text="" />
 
-    <TextView
+    <Button
         android:id="@+id/tv_btn_copy"
         android:layout_width="395dp"
         android:layout_height="wrap_content"
@@ -45,9 +49,10 @@
         android:background="#FFFFFF"
         android:gravity="center_horizontal|center_vertical"
         android:padding="10dp"
-        android:text="保存参数" />
+        android:visibility="gone"
+        android:text="@string/Save" />
 
-    <TextView
+    <Button
         android:id="@+id/tv_btn_2"
         android:layout_width="395dp"
         android:layout_height="wrap_content"
@@ -56,9 +61,9 @@
         android:background="#FFFFFF"
         android:gravity="center_horizontal|center_vertical"
         android:padding="10dp"
-        android:text="消费" />
+        android:text="@string/Sale" />
 
-    <TextView
+    <Button
         android:id="@+id/tv_btn_refund"
         android:layout_width="395dp"
         android:layout_height="wrap_content"
@@ -67,9 +72,9 @@
         android:background="#FFFFFF"
         android:gravity="center_horizontal"
         android:padding="10dp"
-        android:text="退款" />
+        android:text="@string/Refund" />
 
-    <TextView
+    <Button
         android:id="@+id/tv_btn_void"
         android:layout_width="395dp"
         android:layout_height="wrap_content"
@@ -78,9 +83,9 @@
         android:background="#FFFFFF"
         android:gravity="center_horizontal"
         android:padding="10dp"
-        android:text="撤销" />
+        android:text="@string/Void" />
 
-    <TextView
+    <Button
         android:id="@+id/tv_btn_per"
         android:layout_width="395dp"
         android:layout_height="wrap_content"
@@ -89,9 +94,9 @@
         android:background="#FFFFFF"
         android:gravity="center_horizontal"
         android:padding="10dp"
-        android:text="预授权" />
+        android:text="@string/PreAuth" />
 
-    <TextView
+    <Button
         android:id="@+id/tv_btn_complete"
         android:layout_width="395dp"
         android:layout_height="wrap_content"
@@ -100,9 +105,9 @@
         android:background="#FFFFFF"
         android:gravity="center_horizontal"
         android:padding="10dp"
-        android:text="预授权完成" />
+        android:text="@string/PreAuthComplete" />
 
-    <TextView
+    <Button
         android:id="@+id/tv_btn_per_cancel"
         android:layout_width="395dp"
         android:layout_height="wrap_content"
@@ -111,9 +116,9 @@
         android:background="#FFFFFF"
         android:gravity="center_horizontal"
         android:padding="10dp"
-        android:text="预授权撤销" />
+        android:text="@string/PreAuthVoid" />
 
-    <TextView
+    <Button
         android:id="@+id/tv_btn_per_complete_refund"
         android:layout_width="395dp"
         android:layout_height="wrap_content"
@@ -122,9 +127,9 @@
         android:background="#FFFFFF"
         android:gravity="center_horizontal"
         android:padding="10dp"
-        android:text="预授权完成退款" />
+        android:text="@string/PreAuthCompleteRefund" />
 
-    <TextView
+    <Button
         android:id="@+id/tv_btn_query"
         android:layout_width="395dp"
         android:layout_height="wrap_content"
@@ -133,9 +138,9 @@
         android:background="#FFFFFF"
         android:gravity="center|center_horizontal|center_vertical"
         android:padding="10dp"
-        android:text="查询" />
+        android:text="@string/Query" />
 
-    <TextView
+    <Button
         android:id="@+id/tv_btn_close"
         android:layout_width="395dp"
         android:layout_height="wrap_content"
@@ -144,9 +149,9 @@
         android:background="#FFFFFF"
         android:gravity="center"
         android:padding="10dp"
-        android:text="关闭交易" />
+        android:text="@string/Close" />
 
-    <TextView
+    <Button
         android:id="@+id/tv_btn_black"
         android:layout_width="395dp"
         android:layout_height="wrap_content"
@@ -155,7 +160,7 @@
         android:background="#FFFFFF"
         android:gravity="center"
         android:padding="10dp"
-        android:text="返回" />
+        android:text="@string/back" />
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="wrap_content"

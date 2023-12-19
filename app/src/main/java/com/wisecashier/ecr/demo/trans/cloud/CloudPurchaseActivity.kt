@@ -7,6 +7,7 @@ import android.os.Handler
 import android.os.HandlerThread
 import android.os.Looper
 import android.util.Log
+import android.widget.Switch
 import android.widget.Toast
 import buildToBeSignedString
 import com.wisecashier.ecr.demo.R
@@ -20,6 +21,7 @@ import java.io.DataOutputStream
 import java.net.HttpURLConnection
 import java.net.URL
 
+
 class CloudPurchaseActivity : Activity() {
 
     // 创建后台线程和主线程的 Handler
@@ -32,7 +34,6 @@ class CloudPurchaseActivity : Activity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_cloud_payment)
         val sharedPreferences = getSharedPreferences(packageName, MODE_PRIVATE)
-
 
         tv_btn_2.setOnClickListener {
             finish()
@@ -59,13 +60,13 @@ class CloudPurchaseActivity : Activity() {
             val description = edit_input_description.text.toString()
             val expire = edit_input_expires.text.toString()
             val orderNo = DateUtil.getCurDateStr("yyyyMMddHHmmss")
-            val defaultDescription = "默认描述"
+            val defaultDescription = "This is a ECR order"
 
             val merchant_no = sharedPreferences.getString("merchant_no", "").toString()
             val store_no = sharedPreferences.getString("store_no", "").toString()
             val terminal_sn = sharedPreferences.getString("terminal_sn", "").toString()
             val price_currency = sharedPreferences.getString("price_currency", "").toString()
-            val url = sharedPreferences.getString("url","").toString()
+            val url = sharedPreferences.getString("url", "").toString()
 
             val editor = sharedPreferences.edit()
             editor.putString("merchant_order_no", orderNo)
@@ -79,10 +80,11 @@ class CloudPurchaseActivity : Activity() {
                 "sign_type" to "RSA2",
                 "version" to "1.0",
                 "api_version" to "2.0",
-                "pay_method_category" to "BANKCARD",
+//                "pay_method_category" to "BANKCARD",
                 "message_receiving_application" to "WISECASHIER",
                 "timestamp" to getMillisecond().toString(),
                 "method" to InvokeConstant.ORDER,
+                "required_terminal_authentication" to "1",
                 // API owned parameters
                 "merchant_no" to merchant_no,
                 "store_no" to store_no,
@@ -94,6 +96,7 @@ class CloudPurchaseActivity : Activity() {
                 "trans_type" to InvokeConstant.PURCHASE.toString(),
                 "merchant_order_no" to orderNo
             )
+
             if (tips.isNotEmpty()) {
                 val tip = String.format("%.2f", tips.toDouble())
                 parameters["tip_amount"] = tip
@@ -123,7 +126,7 @@ class CloudPurchaseActivity : Activity() {
                     // 在主线程中处理网络请求的结果
                     // 这里可以更新 UI 或执行其他操作
                     runOnUiThread {
-                        Log.e("Test","Response from gateway [$url] receive data <<-- $response")
+                        Log.e("Test", "Response from gateway [$url] receive data <<-- $response")
                         tv_btn_3.text =
                             tv_btn_3.text.toString() + "\n" + "Response from gateway [$url] receive data <<-- $response"
                     }
@@ -132,104 +135,107 @@ class CloudPurchaseActivity : Activity() {
         }
 
 
-        tv_btn_qr.setOnClickListener {
-            // 启动后台线程
-            backgroundThread = HandlerThread("NetworkThread")
-            backgroundThread.start()
-            backgroundHandler = Handler(backgroundThread.looper)
-
-            val appRsaPrivateKeyPem = InvokeConstant.appRsaPrivateKeyPem
-            val gatewayRsaPublicKeyPem = InvokeConstant.gatewayRsaPublicKeyPem
-            val appId = InvokeConstant.APP_ID
-
-            val amount = edit_input_amount.text.toString()
-            if (amount.isEmpty()) {
-                Toast.makeText(this, "请输入金额", Toast.LENGTH_LONG).show()
-                return@setOnClickListener
-            }
-            val tips = edit_input_tip.text.toString()
-            val cash = edit_input_cash.text.toString()
-            val amt = String.format("%.2f", amount.toDouble())
-            val description = edit_input_description.text.toString()
-            val expire = edit_input_expires.text.toString()
-            val orderNo = DateUtil.getCurDateStr("yyyyMMddHHmmss")
-            val defaultDescription = "默认描述"
-
-            val merchant_no = sharedPreferences.getString("merchant_no", "").toString()
-            val store_no = sharedPreferences.getString("store_no", "").toString()
-            val terminal_sn = sharedPreferences.getString("terminal_sn", "").toString()
-            val price_currency = sharedPreferences.getString("price_currency", "").toString()
-            val url = sharedPreferences.getString("url","").toString()
-
-            val editor = sharedPreferences.edit()
-            editor.putString("merchant_order_no", orderNo)
-            editor.apply()
-
-            val parameters = mutableMapOf(
-                // Common parameters
-                "app_id" to appId,
-                "charset" to "UTF-8",
-                "format" to "JSON",
-                "sign_type" to "RSA2",
-                "version" to "1.0",
-                "api_version" to "2.0",
-                "pay_method_category" to "QR_C_SCAN_B",
-                "pay_method_id" to "ScanToPay",
-                "message_receiving_application" to "WISECASHIER",
-                "timestamp" to getMillisecond().toString(),
-                "method" to InvokeConstant.ORDER,
-                // API owned parameters
-                "merchant_no" to merchant_no,
-                "store_no" to store_no,
-                "terminal_sn" to terminal_sn,
-                "order_amount" to amt,
-                "expires" to (if (expire.isNotEmpty()) expire else "300"),
-                "price_currency" to price_currency,
-                "description" to (if (description.isNotEmpty()) description else defaultDescription),
-                "trans_type" to InvokeConstant.PURCHASE.toString(),
-                "merchant_order_no" to orderNo
-            )
-
-            if (tips.isNotEmpty()) {
-                val tip = String.format("%.2f", tips.toDouble())
-                parameters["tip_amount"] = tip
-            }
-
-            val stringToBeSigned = buildToBeSignedString(parameters)
-            val sign = generateSign(stringToBeSigned, appRsaPrivateKeyPem)
-            parameters["sign"] = sign
-            Log.e("Test", "sign  -->> [$sign] parameters  -->> $parameters")
-
-            // Send HTTP request (You will need to handle HTTP requests in your Kotlin environment)
-            val jsonString = mapToJsonString(parameters)
-            runOnUiThread {
-                Log.e("Test", "Request to gateway [$url] send data  -->> $jsonString")
-                tv_btn_3.text =
-                    "Request to gateway [$url] send data  -->> $jsonString"
-            }
-
-            backgroundHandler.post {
-                val response = sendHttpRequest(url, jsonString)
-                mainHandler.post {
-                    // 在主线程中处理网络请求的结果
-                    // 这里可以更新 UI 或执行其他操作
-                    runOnUiThread {
-                        Log.e("Test","Response from gateway [$url] receive data <<-- $response")
-                        tv_btn_3.text =
-                            tv_btn_3.text.toString() + "\n" + "Response from gateway [$url] receive data <<-- $response"
-                    }
-                }
-            }
-        }
+//        tv_btn_qr.setOnClickListener {
+//            // 启动后台线程
+//            backgroundThread = HandlerThread("NetworkThread")
+//            backgroundThread.start()
+//            backgroundHandler = Handler(backgroundThread.looper)
+//
+//            val appRsaPrivateKeyPem = InvokeConstant.appRsaPrivateKeyPem
+//            val gatewayRsaPublicKeyPem = InvokeConstant.gatewayRsaPublicKeyPem
+//            val appId = InvokeConstant.APP_ID
+//
+//            val amount = edit_input_amount.text.toString()
+//            if (amount.isEmpty()) {
+//                Toast.makeText(this, "请输入金额", Toast.LENGTH_LONG).show()
+//                return@setOnClickListener
+//            }
+//            val tips = edit_input_tip.text.toString()
+//            val cash = edit_input_cash.text.toString()
+//            val amt = String.format("%.2f", amount.toDouble())
+//            val description = edit_input_description.text.toString()
+//            val expire = edit_input_expires.text.toString()
+//            val orderNo = DateUtil.getCurDateStr("yyyyMMddHHmmss")
+//            val defaultDescription = "This is a ECR order"
+//
+//            val merchant_no = sharedPreferences.getString("merchant_no", "").toString()
+//            val store_no = sharedPreferences.getString("store_no", "").toString()
+//            val terminal_sn = sharedPreferences.getString("terminal_sn", "").toString()
+//            val price_currency = sharedPreferences.getString("price_currency", "").toString()
+//            val url = sharedPreferences.getString("url", "").toString()
+//
+//            val editor = sharedPreferences.edit()
+//            editor.putString("merchant_order_no", orderNo)
+//            editor.apply()
+//
+//            val parameters = mutableMapOf(
+//                // Common parameters
+//                "app_id" to appId,
+//                "charset" to "UTF-8",
+//                "format" to "JSON",
+//                "sign_type" to "RSA2",
+//                "version" to "1.0",
+//                "api_version" to "2.0",
+//                "pay_method_category" to "QR_C_SCAN_B",
+//                "pay_method_id" to "ScanToPay",
+//                "message_receiving_application" to "WISECASHIER",
+//                "timestamp" to getMillisecond().toString(),
+//                "method" to InvokeConstant.ORDER,
+//                // API owned parameters
+//                "merchant_no" to merchant_no,
+//                "store_no" to store_no,
+//                "terminal_sn" to terminal_sn,
+//                "order_amount" to amt,
+//                "expires" to (if (expire.isNotEmpty()) expire else "300"),
+//                "price_currency" to price_currency,
+//                "description" to (if (description.isNotEmpty()) description else defaultDescription),
+//                "trans_type" to InvokeConstant.PURCHASE.toString(),
+//                "merchant_order_no" to orderNo
+//            )
+//
+//            if (tips.isNotEmpty()) {
+//                val tip = String.format("%.2f", tips.toDouble())
+//                parameters["tip_amount"] = tip
+//            }
+//
+//            val stringToBeSigned = buildToBeSignedString(parameters)
+//            val sign = generateSign(stringToBeSigned, appRsaPrivateKeyPem)
+//            parameters["sign"] = sign
+//            Log.e("Test", "sign  -->> [$sign] parameters  -->> $parameters")
+//
+//            // Send HTTP request (You will need to handle HTTP requests in your Kotlin environment)
+//            val jsonString = mapToJsonString(parameters)
+//            runOnUiThread {
+//                Log.e("Test", "Request to gateway [$url] send data  -->> $jsonString")
+//                tv_btn_3.text =
+//                    "Request to gateway [$url] send data  -->> $jsonString"
+//            }
+//
+//            backgroundHandler.post {
+//                val response = sendHttpRequest(url, jsonString)
+//                mainHandler.post {
+//                    // 在主线程中处理网络请求的结果
+//                    // 这里可以更新 UI 或执行其他操作
+//                    runOnUiThread {
+//                        Log.e("Test", "Response from gateway [$url] receive data <<-- $response")
+//                        tv_btn_3.text =
+//                            tv_btn_3.text.toString() + "\n" + "Response from gateway [$url] receive data <<-- $response"
+//                    }
+//                }
+//            }
+//        }
     }
 
-    private fun cScanQR() {
-
-    }
+//    private fun cScanQR() {
+//
+//    }
 
     override fun onDestroy() {
         // 释放后台线程资源
-        backgroundThread.quitSafely()
+        if (::backgroundThread.isInitialized) {
+            Log.e("Test","isInitialized")
+            backgroundThread.quitSafely()
+        }
         super.onDestroy()
     }
 

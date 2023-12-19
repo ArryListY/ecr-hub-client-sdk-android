@@ -61,24 +61,24 @@
             android:background="#FFFFFF"
             android:gravity="center"
             android:padding="10dp"
-            android:text="Bank Card" />
+            android:text="@string/bank_card" />
 
-        <!-- 添加间隔 -->
-        <View
-            android:layout_width="10dp"
-            android:layout_height="1dp" />
+<!--        &lt;!&ndash; 添加间隔 &ndash;&gt;-->
+<!--        <View-->
+<!--            android:layout_width="10dp"-->
+<!--            android:layout_height="1dp" />-->
 
-        <TextView
-            android:id="@+id/tv_btn_qr"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_gravity="center"
-            android:layout_marginTop="10dp"
-            android:background="#FFFFFF"
-            android:gravity="center"
-            android:padding="10dp"
-            android:text="QR Pay C-B" />
+<!--        <TextView-->
+<!--            android:id="@+id/tv_btn_qr"-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_weight="1"-->
+<!--            android:layout_gravity="center"-->
+<!--            android:layout_marginTop="10dp"-->
+<!--            android:background="#FFFFFF"-->
+<!--            android:gravity="center"-->
+<!--            android:padding="10dp"-->
+<!--            android:text="QR Pay C-B" />-->
     </LinearLayout>
 
 
@@ -91,7 +91,7 @@
         android:background="#FFFFFF"
         android:gravity="center"
         android:padding="10dp"
-        android:text="关闭页面" />
+        android:text="@string/back" />
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="wrap_content"

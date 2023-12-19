@@ -28,89 +28,97 @@
 
     <TextView
         android:id="@+id/tv_btn_8"
-        android:layout_width="wrap_content"
+        android:layout_width="386dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="10dp"
         android:background="#FFFFFF"
+        android:gravity="clip_horizontal|center"
         android:padding="10dp"
         android:text="断开连接"
         android:visibility="gone" />
 
     <LinearLayout
         android:id="@+id/ll_layout1"
-        android:layout_width="match_parent"
+        android:layout_width="386dp"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:visibility="gone">
 
         <TextView
             android:id="@+id/tv_btn_9"
-            android:layout_width="wrap_content"
+            android:layout_width="386dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="10dp"
             android:background="#FFFFFF"
+            android:gravity="clip_horizontal|center"
             android:padding="10dp"
             android:text="请求配对" />
 
         <TextView
             android:id="@+id/tv_btn_10"
-            android:layout_width="wrap_content"
+            android:layout_width="386dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="10dp"
             android:background="#FFFFFF"
+            android:gravity="clip_horizontal|center"
             android:padding="10dp"
             android:text="取消配对" />
 
         <TextView
             android:id="@+id/tv_btn_1"
-            android:layout_width="wrap_content"
+            android:layout_width="386dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="10dp"
             android:background="#FFFFFF"
+            android:gravity="clip_horizontal|center"
             android:padding="10dp"
             android:text="初始化连接" />
 
         <TextView
             android:id="@+id/tv_btn_2"
-            android:layout_width="wrap_content"
+            android:layout_width="386dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="10dp"
             android:background="#FFFFFF"
+            android:gravity="clip_horizontal|center"
             android:padding="10dp"
             android:text="消费" />
 
         <TextView
             android:id="@+id/tv_btn_6"
-            android:layout_width="wrap_content"
+            android:layout_width="386dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="10dp"
             android:background="#FFFFFF"
+            android:gravity="clip_horizontal|center"
             android:padding="10dp"
             android:text="退款" />
 
         <TextView
             android:id="@+id/tv_btn_7"
-            android:layout_width="wrap_content"
+            android:layout_width="386dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="10dp"
             android:background="#FFFFFF"
+            android:gravity="clip_horizontal|center"
             android:padding="10dp"
             android:text="查询" />
 
         <TextView
             android:id="@+id/tv_btn_4"
-            android:layout_width="wrap_content"
+            android:layout_width="386dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="10dp"
             android:background="#FFFFFF"
+            android:gravity="clip_horizontal|center"
             android:padding="10dp"
             android:text="关闭交易" />
     </LinearLayout>

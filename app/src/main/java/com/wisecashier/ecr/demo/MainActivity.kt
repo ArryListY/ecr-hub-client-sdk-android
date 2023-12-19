@@ -183,7 +183,7 @@ class MainActivity : Activity(), ECRHubConnectListener, SearchServerListener {
 
     // 显示询问对话框
     private fun showConfirmationDialog() {
-        val options = arrayOf("AddPay-生产-PayCloud Test Merchant", "AddPay-测试-Frame Grilled Chicken", "AddPay-测试-L3 Test Merchant")
+        val options = arrayOf("AddPay-生产-PayCloud Test Merchant","AddPay-测试-PP35272139001292", "AddPay-测试-T2-WTYG002328000048", "AddPay-测试-Dave-PP35272108005595", "AddPay-测试-L3 Test Merchant")
 
         val builder = AlertDialog.Builder(this)
         builder.setTitle("请选择运行环境")
@@ -220,11 +220,25 @@ class MainActivity : Activity(), ECRHubConnectListener, SearchServerListener {
                 defaultTerminalSN = "PP35272203002329"
                 defaultCurrency = "ZAR"
             }
-            "AddPay-测试-Frame Grilled Chicken" -> {
+            "AddPay-测试-PP35272139001292" -> {
                 url = InvokeConstant.SANDBOX_GATEWAY_URL
                 defaultMerchant = "302300000582"
                 defaultStore = "4023000003"
-                defaultTerminalSN = "PP35272203002342"
+                defaultTerminalSN = "PP35272139001292"
+                defaultCurrency = "ZAR"
+            }
+            "AddPay-测试-T2-WTYG002328000048" -> {
+                url = InvokeConstant.SANDBOX_GATEWAY_URL
+                defaultMerchant = "302100091252"
+                defaultStore = "4022000104"
+                defaultTerminalSN = "WTYG002328000048"
+                defaultCurrency = "ZAR"
+            }
+            "AddPay-测试-Dave-PP35272108005595" -> {
+                url = InvokeConstant.SANDBOX_GATEWAY_URL
+                defaultMerchant = "302100091252"
+                defaultStore = "4022000118"
+                defaultTerminalSN = "PP35272108005595"
                 defaultCurrency = "ZAR"
             }
             "AddPay-测试-L3 Test Merchant" -> {
@@ -277,6 +291,9 @@ class MainActivity : Activity(), ECRHubConnectListener, SearchServerListener {
         isConnected = false
     }
 
+    private val discoveredIpAddresses = mutableListOf<String>()
+
+
     override fun onServerFind(ip: String?, port: String?, deviceName: String?) {
         runOnUiThread {
             tv_btn_3.text =
@@ -287,7 +304,35 @@ class MainActivity : Activity(), ECRHubConnectListener, SearchServerListener {
                 Toast.LENGTH_LONG
             ).show()
             this.ip = "ws://" + ip + ":" + port
-            mClient.autoConnect(this.ip)
+            // 将发现的IP地址添加到列表中
+            val ipAddress = this.ip
+            discoveredIpAddresses.add(ipAddress)
+//            mClient.autoConnect(this.ip)
+            showIpAddressSelectionDialog()
+
         }
     }
+
+    // 在用户选择连接时，弹出对话框供用户选择IP地址
+    private fun showIpAddressSelectionDialog() {
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle("选择要连接的IP地址")
+        builder.setItems(discoveredIpAddresses.toTypedArray()) { dialog, which ->
+            val selectedIp = discoveredIpAddresses[which]
+            // 在这里使用选定的IP地址进行连接
+            connectToServer(selectedIp)
+        }
+        builder.setNegativeButton("取消") { dialog, which ->
+            dialog.dismiss()
+        }
+        builder.show()
+    }
+
+    // 用于连接服务器的函数
+    private fun connectToServer(selectedIp: String) {
+        // 在这里执行连接逻辑
+        // 使用 selectedIp 变量来连接所选的IP地址
+        mClient.autoConnect(selectedIp)
+    }
+
 }

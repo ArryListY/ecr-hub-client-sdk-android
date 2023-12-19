@@ -63,12 +63,12 @@ class CloudRefundActivity : Activity() {
             }
             val amt = String.format("%.2f", amount.toDouble())
 //            val description = edit_input_description.text.toString()
-            val defaultDescription = "默认描述"
+            val defaultDescription = "This is a ECR order"
             val merchant_no = sharedPreferences.getString("merchant_no", "").toString()
             val store_no = sharedPreferences.getString("store_no", "").toString()
             val terminal_sn = sharedPreferences.getString("terminal_sn", "").toString()
             val price_currency = sharedPreferences.getString("price_currency", "").toString()
-            val url = sharedPreferences.getString("url","").toString()
+            val url = sharedPreferences.getString("url", "").toString()
 
             val parameters = mutableMapOf(
                 // Common parameters
@@ -91,10 +91,11 @@ class CloudRefundActivity : Activity() {
                 "expires" to (if (expire.isNotEmpty()) expire else "300"),
                 "description" to defaultDescription,
                 "trans_type" to InvokeConstant.REFUND.toString(),
-                "merchant_order_no" to "Refund_"+getMillisecond().toString()
+                "required_terminal_authentication" to "1",
+                "merchant_order_no" to "Refund_" + getMillisecond().toString()
             )
 
-            if (cash.isNotEmpty()){
+            if (cash.isNotEmpty()) {
                 val cashAmount = String.format("%.2f", cash.toDouble())
                 parameters["cashback_amount"] = cashAmount
             }
@@ -104,13 +105,14 @@ class CloudRefundActivity : Activity() {
                 parameters["tip_amount"] = tip
             }
 
-            if (edit_input_org_merchant_order_no.text.isNotEmpty()){
+            if (edit_input_org_merchant_order_no.text.isNotEmpty()) {
                 val orig_merchant_order_no = edit_input_org_merchant_order_no.text.toString()
                 parameters["orig_merchant_order_no"] = orig_merchant_order_no
                 Log.e("org_merchant_order_no is NotEmpty：", orig_merchant_order_no)
             } else {
-                val orig_merchant_order_no = sharedPreferences.getString("merchant_order_no", "").toString()
-                parameters["orig_merchant_order_no"] = orig_merchant_order_no
+                val orig_merchant_order_no =
+                    sharedPreferences.getString("merchant_order_no", "").toString()
+//                parameters["orig_merchant_order_no"] = ""
                 Log.e("orig_merchant_order_no is Empty：", orig_merchant_order_no)
             }
 
@@ -131,7 +133,7 @@ class CloudRefundActivity : Activity() {
                     // 在主线程中处理网络请求的结果
                     // 这里可以更新 UI 或执行其他操作
                     runOnUiThread {
-                        Log.e("Test","Response from gateway [$url] receive data <<-- $response")
+                        Log.e("Test", "Response from gateway [$url] receive data <<-- $response")
                         tv_btn_3.text =
                             tv_btn_3.text.toString() + "\n" + "Response from gateway [$url] receive data <<-- $response"
                     }
@@ -140,10 +142,13 @@ class CloudRefundActivity : Activity() {
         }
     }
 
+    //
     override fun onDestroy() {
-        // 释放后台线程资源
-        backgroundThread.quitSafely()
-        backgroundThread.interrupt()
+        if (::backgroundThread.isInitialized) {
+            // 释放后台线程资源
+            backgroundThread.quitSafely()
+            backgroundThread.interrupt()
+        }
         super.onDestroy()
     }
 

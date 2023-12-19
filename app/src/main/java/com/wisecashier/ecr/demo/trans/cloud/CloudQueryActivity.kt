@@ -100,9 +100,11 @@ class CloudQueryActivity : Activity() {
     }
 
     override fun onDestroy() {
-        // 释放后台线程资源
-        backgroundThread.quitSafely()
-        backgroundThread.interrupt()
+        if (::backgroundThread.isInitialized) {
+            // 释放后台线程资源
+            backgroundThread.quitSafely()
+            backgroundThread.interrupt()
+        }
         super.onDestroy()
     }
 

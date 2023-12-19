@@ -63,7 +63,7 @@ class CloudPerAuthCancelActivity : Activity() {
 //            val description = edit_input_description.text.toString()
             val expire = edit_input_expires.text.toString()
             val orderNo = getMillisecond().toString()
-            val defaultDescription = "默认描述"
+            val defaultDescription = "This is a ECR order"
 
             val merchant_no = sharedPreferences.getString("merchant_no", "").toString()
             val store_no = sharedPreferences.getString("store_no", "").toString()
@@ -132,8 +132,11 @@ class CloudPerAuthCancelActivity : Activity() {
     }
 
     override fun onDestroy() {
-        // 释放后台线程资源
-        backgroundThread.quitSafely()
+        if (::backgroundThread.isInitialized) {
+            // 释放后台线程资源
+            backgroundThread.quitSafely()
+            backgroundThread.interrupt()
+        }
         super.onDestroy()
     }
 

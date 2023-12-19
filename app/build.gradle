@@ -49,5 +49,6 @@ dependencies {
     implementation 'com.github.kittinunf.fuel:fuel-android:2.3.1'
     implementation "com.fasterxml.jackson.module:jackson-module-kotlin:2.12.2"
     implementation 'com.google.code.gson:gson:2.8.9'
+    implementation 'org.jmdns:jmdns:3.5.4'
     //implementation 'com.github.paycloud-open:ecr-hub-client-sdk-android:1.0.2'
 }

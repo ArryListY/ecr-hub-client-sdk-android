@@ -12,6 +12,7 @@ import javax.jmdns.ServiceEvent;
 import javax.jmdns.ServiceInfo;
 import javax.jmdns.ServiceListener;
 
+
 public class JMdnsManager implements ServiceListener {
     private final static String CLIENT_REMOTE_TYPE = "_ecr-hub-client._tcp.local.";
 

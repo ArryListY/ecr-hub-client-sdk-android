@@ -57,7 +57,7 @@ class CloudPerAuthCompleteRefundActivity : Activity() {
             val amt = String.format("%.2f", amount.toDouble())
 
 //            val description = edit_input_description.text.toString()
-            val defaultDescription = "默认描述"
+            val defaultDescription = "This is a ECR order"
             val merchant_no = sharedPreferences.getString("merchant_no", "").toString()
             val store_no = sharedPreferences.getString("store_no", "").toString()
             val terminal_sn = sharedPreferences.getString("terminal_sn", "").toString()
@@ -129,8 +129,11 @@ class CloudPerAuthCompleteRefundActivity : Activity() {
     }
 
     override fun onDestroy() {
-        // 释放后台线程资源
-        backgroundThread.quitSafely()
+        if (::backgroundThread.isInitialized) {
+            // 释放后台线程资源
+            backgroundThread.quitSafely()
+            backgroundThread.interrupt()
+        }
         super.onDestroy()
     }
 

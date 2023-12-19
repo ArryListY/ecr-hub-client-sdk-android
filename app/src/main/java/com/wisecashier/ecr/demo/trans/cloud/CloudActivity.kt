@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.EditText
+import android.widget.TextView
 import android.widget.Toast
 import com.wisecashier.ecr.demo.R
 import kotlinx.android.synthetic.main.activity_cloud.*
@@ -43,29 +44,40 @@ class CloudActivity : Activity(){
         // 初始化SharedPreferences，使用应用的包名作为名称
         val sharedPreferences = getSharedPreferences(packageName, MODE_PRIVATE)
 
+        val editor = sharedPreferences.edit()
+        editor.putString("price_currency", defaultCurrency)
+        editor.putString("terminal_sn", defaultTerminalSN)
+        editor.putString("store_no", defaultStore)
+        editor.putString("merchant_no", defaultMerchant)
+        editor.putString("url", url)
+        editor.apply()
+        onConnect()
+
 
         //保存参数
         tv_btn_copy.setOnClickListener{
-            if (!isConnected) {
-                val priceCurrency = edit_input_currency.text.toString()
-                val terminalSn = edit_input_terminal_sn.text.toString()
-                val storeNo = edit_input_store.text.toString()
-                val merchantNo = edit_input_merchant.text.toString()
+            if (url != null) {
+                val copy = findViewById<TextView>(R.id.tv_btn_copy)
+                    val priceCurrency = edit_input_currency.text.toString()
+                    val terminalSn = edit_input_terminal_sn.text.toString()
+                    val storeNo = edit_input_store.text.toString()
+                    val merchantNo = edit_input_merchant.text.toString()
 
-                // 保存用户输入的值到SharedPreferences
-                val editor = sharedPreferences.edit()
-                editor.putString("price_currency", priceCurrency)
-                editor.putString("terminal_sn", terminalSn)
-                editor.putString("store_no", storeNo)
-                editor.putString("merchant_no", merchantNo)
-                editor.putString("url", url)
+                    // 保存用户输入的值到SharedPreferences
+                    val editor = sharedPreferences.edit()
+                    editor.putString("price_currency", priceCurrency)
+                    editor.putString("terminal_sn", terminalSn)
+                    editor.putString("store_no", storeNo)
+                    editor.putString("merchant_no", merchantNo)
+                    editor.putString("url", url)
 
-                editor.apply()
-                onConnect()
-                // 提示用户保存成功或执行其他操作
-                runOnUiThread {
-                    Toast.makeText(this, "参数已保存", Toast.LENGTH_SHORT).show()
-                }
+                    editor.apply()
+                    onConnect()
+                    // 提示用户保存成功或执行其他操作
+                    runOnUiThread {
+                        Toast.makeText(this, "参数已保存", Toast.LENGTH_SHORT).show()
+                    }
+
             }
             return@setOnClickListener
 

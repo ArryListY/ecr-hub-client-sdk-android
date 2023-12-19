@@ -8,18 +8,21 @@
         android:id="@+id/edit_input_amount"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:digits="1234567890."
         android:hint="请输入金额（元为单位）" />
 
     <EditText
         android:id="@+id/edit_input_tip"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:digits="1234567890."
         android:hint="请输入小费（元为单位）" />
 
     <EditText
         android:id="@+id/edit_input_cash"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:digits="1234567890."
         android:hint="请输入cash金额（元为单位）" />
 
     <EditText
@@ -44,7 +47,7 @@
         android:background="#FFFFFF"
         android:gravity="center"
         android:padding="10dp"
-        android:text="退款" />
+        android:text="@string/Refund" />
 
     <TextView
         android:id="@+id/tv_btn_2"
@@ -55,7 +58,7 @@
         android:background="#FFFFFF"
         android:gravity="center"
         android:padding="10dp"
-        android:text="关闭页面" />
+        android:text="@string/back" />
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="wrap_content"

@@ -1,3 +1,21 @@
 <resources>
     <string name="app_name">WiseCashierECRDemo</string>
+    <string name="input_num">请输入商户号</string>
+    <string name="input_store">请输入门店号</string>
+    <string name="input_SN">请输入SN</string>
+    <string name="input_zar">请输入币种</string>
+    <string name="Save">Save</string>
+    <string name="Sale">Sale</string>
+    <string name="Refund">Refund</string>
+    <string name="Void">Void</string>
+    <string name="PreAuth">PreAuth</string>
+    <string name="PreAuthComplete">PreAuthComplete</string>
+    <string name="PreAuthVoid">PreAuthCancel</string>
+    <string name="PreAuthCompleteRefund">PreAuthCompleteRefund</string>
+    <string name="Query">Query</string>
+    <string name="Close">Close</string>
+    <string name="back">Back</string>
+    <string name="Admin">管理员验证</string>
+    <string name="bank_card">Pay</string>
+
 </resources>
