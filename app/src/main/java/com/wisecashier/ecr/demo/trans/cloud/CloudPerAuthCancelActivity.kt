@@ -7,6 +7,8 @@ import android.os.Handler
 import android.os.HandlerThread
 import android.os.Looper
 import android.util.Log
+import android.widget.CompoundButton
+import android.widget.Switch
 import android.widget.Toast
 import buildToBeSignedString
 import com.wisecashier.ecr.demo.R
@@ -32,6 +34,8 @@ class CloudPerAuthCancelActivity : Activity() {
     private lateinit var backgroundThread: HandlerThread
     private lateinit var backgroundHandler: Handler
     private val mainHandler = Handler(Looper.getMainLooper())
+    private lateinit var admin: String // 声明为成员变量
+
 
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -39,6 +43,17 @@ class CloudPerAuthCancelActivity : Activity() {
         setContentView(R.layout.activity_cloud_perauthcancel)
         val sharedPreferences = getSharedPreferences(packageName, MODE_PRIVATE)
 
+        val switchButton = findViewById<Switch>(R.id.switchButton)
+        admin = ""
+        switchButton.setOnCheckedChangeListener { buttonView: CompoundButton?, isChecked: Boolean ->
+            admin = if (isChecked) {
+                Log.e("Test", "open")
+                "1"
+            } else {
+                Log.e("Test", "close")
+                ""
+            }
+        }
 
         tv_btn_2.setOnClickListener {
             finish()
@@ -101,6 +116,10 @@ class CloudPerAuthCancelActivity : Activity() {
                 val orig_merchant_order_no = sharedPreferences.getString("merchant_order_no", "").toString()
                 parameters["orig_merchant_order_no"] = orig_merchant_order_no
                 Log.e("isEmpty", orig_merchant_order_no)
+            }
+            if (admin == "1") {
+                Log.e("Test", "开启管理员验证")
+                parameters["required_terminal_authentication"] = "1"
             }
 
             val stringToBeSigned = buildToBeSignedString(parameters)

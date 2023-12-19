@@ -7,6 +7,7 @@ import android.os.Handler
 import android.os.HandlerThread
 import android.os.Looper
 import android.util.Log
+import android.widget.CompoundButton
 import android.widget.Switch
 import android.widget.Toast
 import buildToBeSignedString
@@ -28,12 +29,25 @@ class CloudPurchaseActivity : Activity() {
     private lateinit var backgroundThread: HandlerThread
     private lateinit var backgroundHandler: Handler
     private val mainHandler = Handler(Looper.getMainLooper())
+    private lateinit var admin: String // 声明为成员变量
 
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_cloud_payment)
         val sharedPreferences = getSharedPreferences(packageName, MODE_PRIVATE)
+
+        val switchButton = findViewById<Switch>(R.id.switchButton)
+        admin = ""
+        switchButton.setOnCheckedChangeListener { buttonView: CompoundButton?, isChecked: Boolean ->
+            admin = if (isChecked) {
+                Log.e("Test", "open")
+                "1"
+            } else {
+                Log.e("Test", "close")
+                ""
+            }
+        }
 
         tv_btn_2.setOnClickListener {
             finish()
@@ -84,7 +98,7 @@ class CloudPurchaseActivity : Activity() {
                 "message_receiving_application" to "WISECASHIER",
                 "timestamp" to getMillisecond().toString(),
                 "method" to InvokeConstant.ORDER,
-                "required_terminal_authentication" to "1",
+//                "required_terminal_authentication" to "1",
                 // API owned parameters
                 "merchant_no" to merchant_no,
                 "store_no" to store_no,
@@ -105,6 +119,11 @@ class CloudPurchaseActivity : Activity() {
             if (cash.isNotEmpty()) {
                 val cashAmount = String.format("%.2f", cash.toDouble())
                 parameters["cashback_amount"] = cashAmount
+            }
+
+            if (admin == "1") {
+                Log.e("Test", "开启管理员验证")
+                parameters["required_terminal_authentication"] = "1"
             }
 
             val stringToBeSigned = buildToBeSignedString(parameters)

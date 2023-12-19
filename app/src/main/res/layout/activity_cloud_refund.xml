@@ -35,8 +35,42 @@
         android:id="@+id/edit_input_expires"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="number"
-        android:hint="过期时间默认300s" />
+        android:hint="过期时间默认300s"
+        android:inputType="number" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Switch
+            android:id="@+id/switchButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:layout_weight="1"
+            android:background="#FFFFFF"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="@string/Admin" />
+
+        <View
+            android:layout_width="10dp"
+            android:layout_height="1dp" />
+
+        <Switch
+            android:id="@+id/switchButton1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:layout_weight="1"
+            android:background="#FFFFFF"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="@string/referenceRefund" />
+    </LinearLayout>
 
     <TextView
         android:id="@+id/tv_btn_1"

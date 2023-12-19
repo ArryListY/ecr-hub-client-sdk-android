@@ -16,6 +16,7 @@
     <string name="Close">Close</string>
     <string name="back">Back</string>
     <string name="Admin">管理员验证</string>
+    <string name="referenceRefund">无参考退款</string>
     <string name="bank_card">Pay</string>
 
 </resources>

@@ -46,6 +46,12 @@
         android:hint="过期时间默认300s"
         android:autofillHints="" />
 
+    <Switch
+        android:id="@+id/switchButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/Admin" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

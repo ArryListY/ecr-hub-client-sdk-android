@@ -24,6 +24,12 @@
         android:inputType="number"
         android:hint="过期时间默认300s" />
 
+    <Switch
+        android:id="@+id/switchButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/Admin" />
+
     <TextView
         android:id="@+id/tv_btn_1"
         android:layout_width="395dp"
