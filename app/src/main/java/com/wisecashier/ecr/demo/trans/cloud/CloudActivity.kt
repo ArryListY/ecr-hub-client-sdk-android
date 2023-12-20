@@ -1,5 +1,6 @@
 package com.wisecashier.ecr.demo.trans.cloud
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
@@ -9,15 +10,18 @@ import android.widget.TextView
 import android.widget.Toast
 import com.wisecashier.ecr.demo.R
 import kotlinx.android.synthetic.main.activity_cloud.*
+import kotlinx.android.synthetic.main.activity_cloud.tv_btn_2
+import kotlinx.android.synthetic.main.activity_cloud.tv_btn_3
 import kotlinx.android.synthetic.main.activity_cloud.tv_btn_black
+import kotlinx.android.synthetic.main.activity_cloud_payment.*
 
-class CloudActivity : Activity(){
+class CloudActivity : Activity() {
 
     var isConnected: Boolean = false
 
 
-
-    override fun onCreate(savedInstanceState: Bundle?){
+    @SuppressLint("SetTextI18n")
+    override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_cloud)
 
@@ -36,11 +40,13 @@ class CloudActivity : Activity(){
         storeEditText.setText(defaultStore)
         terminalSNEditText.setText(defaultTerminalSN)
         currencyEditText.setText(defaultCurrency)
-        Log.e("parameter" , "url -->> [$url]  " +
-                "merchant -->> [$defaultMerchant]  " +
-                "store -->> [$defaultStore]  " +
-                "sn --> [$defaultTerminalSN]  " +
-                "defaultCurrency --> [$defaultCurrency]  " )
+        Log.e(
+            "parameter", "url -->> [$url]  " +
+                    "merchant -->> [$defaultMerchant]  " +
+                    "store -->> [$defaultStore]  " +
+                    "sn --> [$defaultTerminalSN]  " +
+                    "defaultCurrency --> [$defaultCurrency]  "
+        )
         // 初始化SharedPreferences，使用应用的包名作为名称
         val sharedPreferences = getSharedPreferences(packageName, MODE_PRIVATE)
 
@@ -52,31 +58,38 @@ class CloudActivity : Activity(){
         editor.putString("url", url)
         editor.apply()
         onConnect()
-
+        runOnUiThread {
+            tv_btn_3.text =
+                "Url -->> [$url]   " +
+                        "\nMerchant -->> [$defaultMerchant]   " +
+                        "\nStore -->> [$defaultStore]   " +
+                        "\nSN --> [$defaultTerminalSN]   " +
+                        "\nCurrency --> [$defaultCurrency]"
+        }
 
         //保存参数
-        tv_btn_copy.setOnClickListener{
+        tv_btn_copy.setOnClickListener {
             if (url != null) {
                 val copy = findViewById<TextView>(R.id.tv_btn_copy)
-                    val priceCurrency = edit_input_currency.text.toString()
-                    val terminalSn = edit_input_terminal_sn.text.toString()
-                    val storeNo = edit_input_store.text.toString()
-                    val merchantNo = edit_input_merchant.text.toString()
+                val priceCurrency = edit_input_currency.text.toString()
+                val terminalSn = edit_input_terminal_sn.text.toString()
+                val storeNo = edit_input_store.text.toString()
+                val merchantNo = edit_input_merchant.text.toString()
 
-                    // 保存用户输入的值到SharedPreferences
-                    val editor = sharedPreferences.edit()
-                    editor.putString("price_currency", priceCurrency)
-                    editor.putString("terminal_sn", terminalSn)
-                    editor.putString("store_no", storeNo)
-                    editor.putString("merchant_no", merchantNo)
-                    editor.putString("url", url)
+                // 保存用户输入的值到SharedPreferences
+                val editor = sharedPreferences.edit()
+                editor.putString("price_currency", priceCurrency)
+                editor.putString("terminal_sn", terminalSn)
+                editor.putString("store_no", storeNo)
+                editor.putString("merchant_no", merchantNo)
+                editor.putString("url", url)
 
-                    editor.apply()
-                    onConnect()
-                    // 提示用户保存成功或执行其他操作
-                    runOnUiThread {
-                        Toast.makeText(this, "参数已保存", Toast.LENGTH_SHORT).show()
-                    }
+                editor.apply()
+                onConnect()
+                // 提示用户保存成功或执行其他操作
+                runOnUiThread {
+                    Toast.makeText(this, "参数已保存", Toast.LENGTH_SHORT).show()
+                }
 
             }
             return@setOnClickListener
@@ -84,7 +97,7 @@ class CloudActivity : Activity(){
         }
 
         //PURCHASE
-        tv_btn_2.setOnClickListener{
+        tv_btn_2.setOnClickListener {
             if (!isConnected) {
                 runOnUiThread {
                     Toast.makeText(this, "未保存参数", Toast.LENGTH_LONG).show()
@@ -95,7 +108,7 @@ class CloudActivity : Activity(){
         }
 
         //Refund
-        tv_btn_refund.setOnClickListener{
+        tv_btn_refund.setOnClickListener {
             if (!isConnected) {
                 runOnUiThread {
                     Toast.makeText(this, "未保存参数", Toast.LENGTH_LONG).show()
@@ -106,7 +119,7 @@ class CloudActivity : Activity(){
         }
 
         //Void
-        tv_btn_void.setOnClickListener{
+        tv_btn_void.setOnClickListener {
             if (!isConnected) {
                 runOnUiThread {
                     Toast.makeText(this, "未保存参数", Toast.LENGTH_LONG).show()
@@ -117,7 +130,7 @@ class CloudActivity : Activity(){
         }
 
         //PerAuth
-        tv_btn_per.setOnClickListener{
+        tv_btn_per.setOnClickListener {
             if (!isConnected) {
                 runOnUiThread {
                     Toast.makeText(this, "未保存参数", Toast.LENGTH_LONG).show()
@@ -128,7 +141,7 @@ class CloudActivity : Activity(){
         }
 
         //PerAuth-complete
-        tv_btn_complete.setOnClickListener{
+        tv_btn_complete.setOnClickListener {
             if (!isConnected) {
                 runOnUiThread {
                     Toast.makeText(this, "未保存参数", Toast.LENGTH_LONG).show()
@@ -139,7 +152,7 @@ class CloudActivity : Activity(){
         }
 
         //PerAuth-cancel
-        tv_btn_per_cancel.setOnClickListener{
+        tv_btn_per_cancel.setOnClickListener {
             if (!isConnected) {
                 runOnUiThread {
                     Toast.makeText(this, "未保存参数", Toast.LENGTH_LONG).show()
@@ -150,18 +163,23 @@ class CloudActivity : Activity(){
         }
 
         //PerAuth-complete-refund
-        tv_btn_per_complete_refund.setOnClickListener{
+        tv_btn_per_complete_refund.setOnClickListener {
             if (!isConnected) {
                 runOnUiThread {
                     Toast.makeText(this, "未保存参数", Toast.LENGTH_LONG).show()
                 }
                 return@setOnClickListener
             }
-            startActivity(Intent(applicationContext, CloudPerAuthCompleteRefundActivity::class.java))
+            startActivity(
+                Intent(
+                    applicationContext,
+                    CloudPerAuthCompleteRefundActivity::class.java
+                )
+            )
         }
 
         //Query
-        tv_btn_query.setOnClickListener{
+        tv_btn_query.setOnClickListener {
             if (!isConnected) {
                 runOnUiThread {
                     Toast.makeText(this, "未保存参数", Toast.LENGTH_LONG).show()
@@ -172,7 +190,7 @@ class CloudActivity : Activity(){
         }
 
         //Close
-        tv_btn_close.setOnClickListener{
+        tv_btn_close.setOnClickListener {
             if (!isConnected) {
                 runOnUiThread {
                     Toast.makeText(this, "未保存参数", Toast.LENGTH_LONG).show()
@@ -184,7 +202,8 @@ class CloudActivity : Activity(){
 
 
         //返回
-        tv_btn_black.setOnClickListener{
+        tv_btn_black.setOnClickListener {
+            onDisconnect()
             finish()
         }
 

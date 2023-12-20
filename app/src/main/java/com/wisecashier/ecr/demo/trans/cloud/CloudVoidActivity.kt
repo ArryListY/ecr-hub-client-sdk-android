@@ -16,12 +16,14 @@ import com.wisecashier.ecr.demo.constant.InvokeConstant
 import com.wisecashier.ecr.demo.util.DateUtil
 import generateSign
 import getMillisecond
+import kotlinx.android.synthetic.main.activity_cloud_perauthcancel.*
 import kotlinx.android.synthetic.main.activity_cloud_void.*
 import kotlinx.android.synthetic.main.activity_cloud_void.edit_input_expires
 import kotlinx.android.synthetic.main.activity_cloud_void.tv_btn_1
 import kotlinx.android.synthetic.main.activity_cloud_void.tv_btn_2
 import kotlinx.android.synthetic.main.activity_cloud_void.tv_btn_3
 import kotlinx.android.synthetic.main.activity_cloud_void.edit_input_amount
+import kotlinx.android.synthetic.main.activity_cloud_void.edit_input_merchant_order_no
 import mapToJsonString
 import java.io.DataOutputStream
 import java.net.HttpURLConnection
@@ -74,11 +76,6 @@ class CloudVoidActivity : Activity() {
                 return@setOnClickListener
             }
             val amt = String.format("%.2f", amount.toDouble())
-            val org_merchant_order_no = edit_input_merchant_order_no.text.toString()
-            if (org_merchant_order_no.isEmpty()) {
-                Toast.makeText(this, "请输入订单号", Toast.LENGTH_LONG).show()
-                return@setOnClickListener
-            }
 //            val description = edit_input_description.text.toString()
             val defaultDescription = "This is a ECR order"
             val merchant_no = sharedPreferences.getString("merchant_no", "").toString()
@@ -108,9 +105,19 @@ class CloudVoidActivity : Activity() {
                 "price_currency" to price_currency,
                 "description" to defaultDescription,
                 "trans_type" to InvokeConstant.VOID.toString(),
-                "orig_merchant_order_no" to org_merchant_order_no,
+//                "orig_merchant_order_no" to org_merchant_order_no,
                 "merchant_order_no" to DateUtil.getCurDateStr("yyyyMMddHHmmss")
             )
+
+            if (edit_input_merchant_order_no.text.isNotEmpty()){
+                val orig_merchant_order_no = edit_input_merchant_order_no.text.toString()
+                parameters["orig_merchant_order_no"] = orig_merchant_order_no
+                Log.e("isNotEmpty", orig_merchant_order_no)
+            } else {
+                val orig_merchant_order_no = sharedPreferences.getString("merchant_order_no", "").toString()
+                parameters["orig_merchant_order_no"] = orig_merchant_order_no
+                Log.e("isEmpty", orig_merchant_order_no)
+            }
 
             if (admin == "1") {
                 Log.e("Test", "开启管理员验证")
