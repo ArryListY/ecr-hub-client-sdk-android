@@ -17,6 +17,7 @@ import com.wisecashier.ecr.demo.util.DateUtil
 import generateSign
 import getMillisecond
 import kotlinx.android.synthetic.main.activity_cloud_perauthcancel.*
+import kotlinx.android.synthetic.main.activity_cloud_refund.*
 import kotlinx.android.synthetic.main.activity_cloud_void.*
 import kotlinx.android.synthetic.main.activity_cloud_void.edit_input_expires
 import kotlinx.android.synthetic.main.activity_cloud_void.tv_btn_1
@@ -24,6 +25,7 @@ import kotlinx.android.synthetic.main.activity_cloud_void.tv_btn_2
 import kotlinx.android.synthetic.main.activity_cloud_void.tv_btn_3
 import kotlinx.android.synthetic.main.activity_cloud_void.edit_input_amount
 import kotlinx.android.synthetic.main.activity_cloud_void.edit_input_merchant_order_no
+import kotlinx.android.synthetic.main.activity_cloud_void.edit_input_tip
 import mapToJsonString
 import java.io.DataOutputStream
 import java.net.HttpURLConnection
@@ -67,7 +69,7 @@ class CloudVoidActivity : Activity() {
 
             val appRsaPrivateKeyPem = InvokeConstant.appRsaPrivateKeyPem
             val gatewayRsaPublicKeyPem = InvokeConstant.gatewayRsaPublicKeyPem
-            val url = sharedPreferences.getString("url","").toString()
+            val url = sharedPreferences.getString("url", "").toString()
             val appId = InvokeConstant.APP_ID
             val amount = edit_input_amount.text.toString()
             val expire = edit_input_expires.text.toString()
@@ -82,7 +84,8 @@ class CloudVoidActivity : Activity() {
             val store_no = sharedPreferences.getString("store_no", "").toString()
             val terminal_sn = sharedPreferences.getString("terminal_sn", "").toString()
             val price_currency = sharedPreferences.getString("price_currency", "").toString()
-
+            val tips = edit_input_tip.text.toString()
+            val orderNo = "Refund_"+DateUtil.getCurDateStr("yyyyMMddHHmmss")
 
             val parameters = mutableMapOf(
                 // Common parameters
@@ -105,18 +108,23 @@ class CloudVoidActivity : Activity() {
                 "price_currency" to price_currency,
                 "description" to defaultDescription,
                 "trans_type" to InvokeConstant.VOID.toString(),
-//                "orig_merchant_order_no" to org_merchant_order_no,
-                "merchant_order_no" to DateUtil.getCurDateStr("yyyyMMddHHmmss")
+                "merchant_order_no" to orderNo
             )
 
-            if (edit_input_merchant_order_no.text.isNotEmpty()){
+            if (edit_input_merchant_order_no.text.isNotEmpty()) {
                 val orig_merchant_order_no = edit_input_merchant_order_no.text.toString()
                 parameters["orig_merchant_order_no"] = orig_merchant_order_no
                 Log.e("isNotEmpty", orig_merchant_order_no)
             } else {
-                val orig_merchant_order_no = sharedPreferences.getString("merchant_order_no", "").toString()
+                val orig_merchant_order_no =
+                    sharedPreferences.getString("merchant_order_no", "").toString()
                 parameters["orig_merchant_order_no"] = orig_merchant_order_no
                 Log.e("isEmpty", orig_merchant_order_no)
+            }
+
+            if (tips.isNotEmpty()) {
+                val tip = String.format("%.2f", tips.toDouble())
+                parameters["tip_amount"] = tip
             }
 
             if (admin == "1") {
@@ -131,6 +139,7 @@ class CloudVoidActivity : Activity() {
             // Send HTTP request (You will need to handle HTTP requests in your Kotlin environment)
             val jsonString = mapToJsonString(parameters)
             runOnUiThread {
+                Log.e("Test", "Request to gateway [$url] send data  -->> $jsonString")
                 tv_btn_3.text =
                     "Request to gateway [$url] send data  -->> $jsonString"
             }
@@ -140,12 +149,15 @@ class CloudVoidActivity : Activity() {
                     // 在主线程中处理网络请求的结果
                     // 这里可以更新 UI 或执行其他操作
                     runOnUiThread {
-                        Log.e("Test","Response from gateway [$url] receive data <<-- $response")
+                        Log.e("Test", "Response from gateway [$url] receive data <<-- $response")
                         tv_btn_3.text =
                             tv_btn_3.text.toString() + "\n" + "Response from gateway [$url] receive data <<-- $response"
                     }
                 }
             }
+            val editor = sharedPreferences.edit()
+            editor.putString("merchant_order_no", orderNo)
+            editor.apply()
         }
     }
 

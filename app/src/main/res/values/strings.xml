@@ -15,8 +15,13 @@
     <string name="Query">Query</string>
     <string name="Close">Close</string>
     <string name="back">Back</string>
-    <string name="Admin">管理员验证</string>
-    <string name="referenceRefund">无参考退款</string>
+    <string name="Admin">Admin verify</string>
+    <string name="referenceRefund">UnReference refund</string>
     <string name="bank_card">Pay</string>
+    <string name="description">Please enter description</string>
+    <string name="expirationTime">Expiration time is 300 seconds</string>
+    <string name="Cashback">CashBack Amount</string>
+    <string name="Tips">Tips Amount</string>
+    <string name="OrderAmount">Order Amount</string>
 
 </resources>

@@ -120,7 +120,7 @@ class CloudPerAuthActivity : Activity() {
             // Send HTTP request (You will need to handle HTTP requests in your Kotlin environment)
             val jsonString = mapToJsonString(parameters)
             runOnUiThread {
-                Log.e("Test", "Request to gateway -->> [$url] send data  -->> $jsonString")
+                Log.e("Test", "Request to gateway [$url] send data  -->> $jsonString")
                 tv_btn_3.text =
                     "Request to gateway -->> [$url] send data  -->> $jsonString"
             }

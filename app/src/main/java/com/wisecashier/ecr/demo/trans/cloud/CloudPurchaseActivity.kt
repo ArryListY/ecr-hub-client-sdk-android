@@ -76,6 +76,11 @@ class CloudPurchaseActivity : Activity() {
             val orderNo = DateUtil.getCurDateStr("yyyyMMddHHmmss")
             val defaultDescription = "This is a ECR order"
 
+            if (tips.isNotEmpty() && cash.isNotEmpty()) {
+                Toast.makeText(this, "不可同时传入Cash或Tips", Toast.LENGTH_LONG).show()
+                return@setOnClickListener
+            }
+
             val merchant_no = sharedPreferences.getString("merchant_no", "").toString()
             val store_no = sharedPreferences.getString("store_no", "").toString()
             val terminal_sn = sharedPreferences.getString("terminal_sn", "").toString()
@@ -107,7 +112,7 @@ class CloudPurchaseActivity : Activity() {
                 "expires" to (if (expire.isNotEmpty()) expire else "300"),
                 "price_currency" to price_currency,
                 "description" to (if (description.isNotEmpty()) description else defaultDescription),
-                "trans_type" to InvokeConstant.PURCHASE.toString(),
+//                "trans_type" to InvokeConstant.PURCHASE.toString(),
                 "merchant_order_no" to orderNo
             )
 
@@ -119,6 +124,9 @@ class CloudPurchaseActivity : Activity() {
             if (cash.isNotEmpty()) {
                 val cashAmount = String.format("%.2f", cash.toDouble())
                 parameters["cashback_amount"] = cashAmount
+                parameters["trans_type"] = InvokeConstant.CASH_BACK.toString()
+            } else {
+                parameters["trans_type"] = InvokeConstant.PURCHASE.toString()
             }
 
             if (admin == "1") {

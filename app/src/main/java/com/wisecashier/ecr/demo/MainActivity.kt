@@ -183,7 +183,7 @@ class MainActivity : Activity(), ECRHubConnectListener, SearchServerListener {
 
     // 显示询问对话框
     private fun showConfirmationDialog() {
-        val options = arrayOf("AddPay-生产-PayCloud Test Merchant","AddPay-测试-PP35272139001292", "AddPay-测试-T2-WTYG002328000048", "AddPay-测试-Dave-PP35272108005595", "AddPay-测试-L3 Test Merchant")
+        val options = arrayOf("AddPay-生产-PayCloud Test Merchant","生产-PayCloud Test Merchant-PP35272139001292","生产-AddPay Test Merchant-PP35272203002342","AddPay-测试-PP35272139001292", "AddPay-测试-T2-WTYG002313000143", "AddPay-测试-Dave-PP35272108005595", "AddPay-测试-L3 Test Merchant")
 
         val builder = AlertDialog.Builder(this)
         builder.setTitle("请选择运行环境")
@@ -216,8 +216,22 @@ class MainActivity : Activity(), ECRHubConnectListener, SearchServerListener {
                 // 将参数传递给其他函数或进行其他逻辑
                 url = InvokeConstant.GATEWAY_URL
                 defaultMerchant = "312100009847"
+                defaultStore = "4121000105"
+                defaultTerminalSN = "WTYG002313000143"
+                defaultCurrency = "ZAR"
+            }
+            "生产-PayCloud Test Merchant-PP35272139001292" -> {
+                url = InvokeConstant.GATEWAY_URL
+                defaultMerchant = "312100009847"
                 defaultStore = "4123002919"
-                defaultTerminalSN = "PP35272203002329"
+                defaultTerminalSN = "PP35272139001292"
+                defaultCurrency = "ZAR"
+            }
+            "生产-AddPay Test Merchant-PP35272203002342" -> {
+                url = InvokeConstant.GATEWAY_URL
+                defaultMerchant = "312100009934"
+                defaultStore = "4121000135"
+                defaultTerminalSN = "PP35272203002342"
                 defaultCurrency = "ZAR"
             }
             "AddPay-测试-PP35272139001292" -> {
@@ -227,11 +241,11 @@ class MainActivity : Activity(), ECRHubConnectListener, SearchServerListener {
                 defaultTerminalSN = "PP35272139001292"
                 defaultCurrency = "ZAR"
             }
-            "AddPay-测试-T2-WTYG002328000048" -> {
+            "AddPay-测试-T2-WTYG002313000143" -> {
                 url = InvokeConstant.SANDBOX_GATEWAY_URL
-                defaultMerchant = "302100091252"
-                defaultStore = "4022000104"
-                defaultTerminalSN = "WTYG002328000048"
+                defaultMerchant = "302300000582"
+                defaultStore = "4023000003"
+                defaultTerminalSN = "WTYG002313000143"
                 defaultCurrency = "ZAR"
             }
             "AddPay-测试-Dave-PP35272108005595" -> {

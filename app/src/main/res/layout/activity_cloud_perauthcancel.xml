@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:digits="1234567890."
         android:inputType="number"
-        android:hint="请输入金额（元为单位）" />
+        android:hint="@string/OrderAmount" />
 
     <EditText
         android:id="@+id/edit_input_merchant_order_no"
@@ -23,12 +23,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="number"
-        android:hint="过期时间默认300s" />
+        android:hint="@e" />
 
     <Switch
         android:id="@+id/switchButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="#FFFFFF"
+        android:padding="10dp"
         android:text="@string/Admin" />
 
     <TextView

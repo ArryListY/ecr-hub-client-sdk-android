@@ -19,7 +19,6 @@ class CloudActivity : Activity() {
 
     var isConnected: Boolean = false
 
-
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,6 +57,7 @@ class CloudActivity : Activity() {
         editor.putString("url", url)
         editor.apply()
         onConnect()
+
         runOnUiThread {
             tv_btn_3.text =
                 "Url -->> [$url]   " +

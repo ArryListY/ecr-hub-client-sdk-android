@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="number"
-        android:hint="请输入金额（元为单位）"
+        android:hint="@string/OrderAmount"
         android:autofillHints="" />
 
     <EditText
@@ -18,7 +18,7 @@
         android:inputType="number"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="请输入小费（元为单位）"
+        android:hint="@string/Tips"
         android:autofillHints="" />
 
     <EditText
@@ -26,7 +26,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:digits="1234567890."
-        android:hint="请输入返现金额（元为单位）"
+        android:hint="@string/Cashback"
         android:autofillHints=""
         android:inputType="number" />
 
@@ -34,7 +34,7 @@
         android:id="@+id/edit_input_description"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="请输入备注"
+        android:hint="@string/description"
         android:autofillHints=""
         android:inputType="text" />
 
@@ -43,13 +43,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="number"
-        android:hint="过期时间默认300s"
+        android:hint="@string/expirationTime"
         android:autofillHints="" />
 
     <Switch
         android:id="@+id/switchButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="#FFFFFF"
+        android:padding="10dp"
         android:text="@string/Admin" />
 
     <LinearLayout

@@ -13,6 +13,7 @@ import android.widget.Toast
 import buildToBeSignedString
 import com.wisecashier.ecr.demo.R
 import com.wisecashier.ecr.demo.constant.InvokeConstant
+import com.wisecashier.ecr.demo.util.DateUtil
 import generateSign
 import getMillisecond
 import kotlinx.android.synthetic.main.activity_cloud_perauth.*
@@ -95,7 +96,7 @@ class CloudRefundActivity : Activity() {
             val terminal_sn = sharedPreferences.getString("terminal_sn", "").toString()
             val price_currency = sharedPreferences.getString("price_currency", "").toString()
             val url = sharedPreferences.getString("url", "").toString()
-
+            val orderNo = "Refund_"+ DateUtil.getCurDateStr("yyyyMMddHHmmss")
             val parameters = mutableMapOf(
                 // Common parameters
                 "app_id" to appId,
@@ -118,7 +119,7 @@ class CloudRefundActivity : Activity() {
                 "description" to defaultDescription,
                 "trans_type" to InvokeConstant.REFUND.toString(),
 //                "required_terminal_authentication" to "1",
-                "merchant_order_no" to "Refund_" + getMillisecond().toString()
+                "merchant_order_no" to orderNo
             )
 
             if (admin == "1") {
@@ -157,6 +158,7 @@ class CloudRefundActivity : Activity() {
             // Send HTTP request (You will need to handle HTTP requests in your Kotlin environment)
             val jsonString = mapToJsonString(parameters)
             runOnUiThread {
+                Log.e("Test", "request to gateway [$url] send data -->> $jsonString")
                 tv_btn_3.text =
                     "Request to gateway [$url] send data  -->> $jsonString"
             }
@@ -172,6 +174,9 @@ class CloudRefundActivity : Activity() {
                     }
                 }
             }
+            val editor = sharedPreferences.edit()
+            editor.putString("merchant_order_no", orderNo)
+            editor.apply()
         }
 
         tv_btn_2.setOnClickListener {
@@ -210,7 +215,6 @@ class CloudRefundActivity : Activity() {
             responseStream.close()
             return responseText
         }
-
         return ""
     }
 
